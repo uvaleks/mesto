@@ -1,6 +1,5 @@
 :root {
     --bg: #2a2c2f;
     --text: #fff;
-    --subtext: #aaa;
-    --overlay: rgb(42, 44, 47);
+    --border: #545454;
 }
