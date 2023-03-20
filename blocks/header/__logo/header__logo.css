@@ -7,7 +7,7 @@
     transition: all .5s ease;
 }
 
-@media screen and (max-width: 879px) {
+@media screen and (max-width: 933px) {
     .header__logo {
         padding: 0 27px 41px;
     }   
