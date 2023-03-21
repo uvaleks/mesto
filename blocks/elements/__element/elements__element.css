@@ -1,0 +1,13 @@
+.elements__element {
+    max-width: 282px;
+    background-color: var(--text);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all .5s ease;
+}
+
+@media screen and (max-width: 425px) {
+    .elements__element {
+        max-width: 100%;
+    }   
+}

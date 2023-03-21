@@ -1,0 +1,21 @@
+.elements__like {
+    background-image: url(/images/like.svg);
+    background-repeat: no-repeat;
+    margin: 30px 20px 31px 0;
+    float: right;
+    width: 22px;
+    height: 19px;
+    opacity: 1;
+    transition: opacity .15s ease;
+}
+
+.elements__like:hover {
+    opacity: .6;
+    cursor: pointer;
+}
+
+.elements__like:active {
+    opacity: 1;
+    background-image: url(/images/like-filled.svg);
+    cursor: pointer;
+}
