@@ -11,9 +11,8 @@
     border: none;
     border-radius: 2px;
     box-sizing: border-box;
-    transition: all .5s ease;
     opacity: 1;
-    transition: opacity .15s ease;
+    transition: all .5s ease, opacity .15s ease;
 }
 
 .popup__submit-button:hover {

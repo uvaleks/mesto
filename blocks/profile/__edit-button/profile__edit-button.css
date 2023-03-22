@@ -11,8 +11,8 @@
     background-repeat: no-repeat;
     background-position: center;
     border: 1px var(--text) solid;
-    transition: all .5s ease;
-    transition: opacity .15s ease;
+    opacity: 1;
+    transition: all .5s ease, opacity .15s ease;
 }
 
 .profile__edit-button:hover {

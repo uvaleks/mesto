@@ -10,9 +10,8 @@
     background-size: 32px;
     background-repeat: no-repeat;
     background-position: center;
-    transition: all .5s ease;
     opacity: 1;
-    transition: opacity .15s ease;
+    transition: all .5s ease, opacity .15s ease;
 }
 
 .popup__close-button:hover {
