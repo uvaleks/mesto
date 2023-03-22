@@ -12,7 +12,7 @@
     background-position: center;
     border: 1px var(--text) solid;
     opacity: 1;
-    transition: all .5s ease, opacity .15s ease;
+    transition: opacity .15s ease, all .5s ease;
 }
 
 .profile__edit-button:hover {

@@ -8,8 +8,8 @@
     border: 2px var(--text) solid;
     box-sizing: border-box;
     margin-left: 36px;
-    transition: all .5s ease;
-    transition: opacity .15s ease;
+    opacity: 1;
+    transition: opacity .15s ease, all .5s ease;
 }
 
 .profile__add-button:hover {
