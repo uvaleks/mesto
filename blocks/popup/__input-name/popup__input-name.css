@@ -1,0 +1,15 @@
+.popup__input-name {
+    width: 100%;
+    border: none;
+    border-bottom: 1px rgba(0,0,0,.2) solid;
+    padding-bottom: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 17px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.popup__input-name::placeholder {
+    color: var(--title);
+}
