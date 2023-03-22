@@ -12,7 +12,7 @@
     </header>
     <main class="content">
         <section class="profile">
-            <img class="profile__avatar" src="/images/avatar.png" alt="Аватар">
+            <img class="profile__avatar" src="images/avatar.png" alt="Аватар">
             <div class="profile__profile-info">
                 <div class="profile__name-wrapper">
                     <h1 class="profile__profile-name">Жак-Ив Кусто</h1>
@@ -24,32 +24,32 @@
         </section>
         <section class="elements">
             <div class="elements__element">
-                <img class="elements__photo" src="/images/teriberka.png" alt="Териберка">
+                <img class="elements__photo" src="images/teriberka.png" alt="Териберка">
                 <h2 class="elements__title">Териберка</h2>
                 <div class="elements__like"></div>
             </div>
             <div class="elements__element">
-                <img class="elements__photo" src="/images/solovki.png" alt="Соловки">
+                <img class="elements__photo" src="images/solovki.png" alt="Соловки">
                 <h2 class="elements__title">Соловки</h2>
                 <div class="elements__like"></div>
             </div>
             <div class="elements__element">
-                <img class="elements__photo" src="/images/baikal.png" alt="Байкал">
+                <img class="elements__photo" src="images/baikal.png" alt="Байкал">
                 <h2 class="elements__title">Байкал</h2>
                 <div class="elements__like"></div>
             </div>
             <div class="elements__element">
-                <img class="elements__photo" src="/images/nikola-lenivets.png" alt="Никола-Ленивец">
+                <img class="elements__photo" src="images/nikola-lenivets.png" alt="Никола-Ленивец">
                 <h2 class="elements__title">Никола-Ленивец</h2>
                 <div class="elements__like"></div>
             </div>
             <div class="elements__element">
-                <img class="elements__photo" src="/images/staraya-russa.png" alt="Старая Русса">
+                <img class="elements__photo" src="images/staraya-russa.png" alt="Старая Русса">
                 <h2 class="elements__title">Старая Русса</h2>
                 <div class="elements__like"></div>
             </div>
             <div class="elements__element">
-                <img class="elements__photo" src="/images/karadag.png" alt="Карадаг">
+                <img class="elements__photo" src="images/karadag.png" alt="Карадаг">
                 <h2 class="elements__title">Карадаг</h2>
                 <div class="elements__like"></div>
             </div>
@@ -59,13 +59,16 @@
         <p class="footer__copyright">© 2023 Mesto Russia</p>
     </footer>
     <div class="popup">
-        <div class="popup__edit-form">
-            <p class="popup__title">Редактировать профиль</p>
-            <input class="popup__input-name" type="text" placeholder="Жак-Ив Кусто">
-            <input class="popup__input-description" type="text" placeholder="Исследователь океана">
-            <div class="popup__submit-button">Сохранить</div>
+        <div class="popup__container">
+            <form class="popup__edit-form">
+                <p class="popup__title">Редактировать профиль</p>
+                <input class="popup__input-name" type="text" placeholder="Жак-Ив Кусто">
+                <input class="popup__input-description" type="text" placeholder="Исследователь океана">
+                <button class="popup__submit-button" type="submit">Сохранить</button>
+            <form>
             <div class="popup__close-button"></div>
         </div>
     </div>
+    <script src="script.js"></script> 
 </body>
 </html>

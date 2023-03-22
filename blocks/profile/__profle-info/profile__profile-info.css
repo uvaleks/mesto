@@ -1,4 +1,11 @@
 .profile__profile-info {
-    width: max-content;
+    width: 100%;
     align-self: center;
+    transition: all .5s ease;
+}
+
+@media screen and (max-width: 615px) {
+    .profile__profile-info {
+        width: calc(100% - 70px);
+    }   
 }
