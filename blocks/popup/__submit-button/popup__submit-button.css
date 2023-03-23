@@ -12,11 +12,11 @@
     border-radius: 2px;
     box-sizing: border-box;
     opacity: 1;
-    transition: opacity .15s ease, all .5s ease;
+    transition: background-color .15s ease, all .5s ease;
 }
 
 .popup__submit-button:hover {
-    opacity: .8;
+    background-color: rgba(0, 0, 0, .8);
     cursor: pointer;
 }
 

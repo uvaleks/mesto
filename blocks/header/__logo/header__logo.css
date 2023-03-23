@@ -1,9 +1,10 @@
 .header__logo {
+    max-width: 142px;
     object-fit: contain;
     object-position: left;
     max-height: 100%;
     padding-bottom: 41px;
-    box-sizing: border-box;
+    box-sizing: contain-box;
     transition: all .5s ease;
 }
 
@@ -15,6 +16,7 @@
 
 @media screen and (max-width: 425px) {
     .header__logo {
+        max-width: 104px;
         padding: 0 27px 32px;
     }   
 }

@@ -1,17 +1,21 @@
-# Проект: Место
+# Проект: Mesto Russia
 
-### Обзор
+Учебный проект Яндекс Практикума, выполняемый на третьем месяце обучения веб-разработке (4 спринт)
 
-* Figma
-* Картинки
+## Используемые технологии:
+* HTML
+* CSS
+* JavaScript
+* Git
 
-**Figma**
+## Используемые инстументы:
+* Figma. [Ссылка на макет](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+* [Сервис по масштабированию png](https://www.iloveimg.com/resize-image/resize-png)
+* [Сервис по оптимизации png](tinypng.com)
+* Visual Studio Code
+* GitHub
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+## Планы по доработке
+* Реализовать смену языка страницы по кнопке в шапке
 
-**Картинки**
-
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
-
-Удачи!
+* [Ссылка на GitHub Pages](https://uvaleks.github.io/mesto/)

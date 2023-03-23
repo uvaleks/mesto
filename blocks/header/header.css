@@ -4,12 +4,12 @@
     padding: 45px 0 0;
     box-sizing: content-box;
     border-bottom: 1px var(--border) solid;
+    opacity: .7;
     transition: all .5s ease;
 }
 
 @media screen and (max-width: 425px) {
     .header {
-        max-height: 56px;
         padding: 28px 0 0;
     }   
 }
