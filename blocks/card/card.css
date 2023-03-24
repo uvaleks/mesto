@@ -1,4 +1,4 @@
-.elements__element {
+.card {
     max-width: 282px;
     background-color: var(--text);
     border-radius: 10px;
@@ -7,7 +7,7 @@
 }
 
 @media screen and (max-width: 425px) {
-    .elements__element {
+    .card {
         max-width: 100%;
     }   
 }

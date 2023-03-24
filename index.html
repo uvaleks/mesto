@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mesto</title>
     <link rel="stylesheet" href="pages/index.css">
+    <link rel="icon" href="favicon.ico">
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
 </head>
 <body class="page">
@@ -17,53 +18,53 @@
             <div class="profile__profile-info">
                 <div class="profile__name-wrapper">
                     <h1 class="profile__profile-name">Жак-Ив Кусто</h1>
-                    <button class="profile__edit-button" type="button"></button>
+                    <button class="profile__edit-button" type="button" aria-label="Редактировать"></button>
                 </div>
                 <p class="profile__profile-description">Исследователь океана</p>
             </div>
-            <button class="profile__add-button" type="button"></button>
+            <button class="profile__add-button" type="button" aria-label="Добавить"></button>
         </section>
         <section class="elements">
-            <div class="elements__element">
-                <img class="elements__photo" src="images/teriberka.png" alt="Териберка">
-                <div class="elements__bar">
-                    <h2 class="elements__title">Териберка</h2>
-                    <button class="elements__like-button" type="button"></button>
+            <div class="card">
+                <img class="card__photo" src="images/teriberka.png" alt="Териберка">
+                <div class="card__bar">
+                    <h2 class="card__title">Териберка</h2>
+                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
                 </div>
             </div>
-            <div class="elements__element">
-                <img class="elements__photo" src="images/solovki.png" alt="Соловки">
-                <div class="elements__bar">
-                    <h2 class="elements__title">Соловки</h2>
-                    <button class="elements__like-button" type="button"></button>
+            <div class="card">
+                <img class="card__photo" src="images/solovki.png" alt="Соловки">
+                <div class="card__bar">
+                    <h2 class="card__title">Соловки</h2>
+                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
                 </div>
             </div>
-            <div class="elements__element">
-                <img class="elements__photo" src="images/baikal.png" alt="Байкал">
-                <div class="elements__bar">
-                    <h2 class="elements__title">Байкал</h2>
-                    <button class="elements__like-button" type="button"></button>
+            <div class="card">
+                <img class="card__photo" src="images/baikal.png" alt="Байкал">
+                <div class="card__bar">
+                    <h2 class="card__title">Байкал</h2>
+                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
                 </div>
             </div>
-            <div class="elements__element">
-                <img class="elements__photo" src="images/nikola-lenivets.png" alt="Никола-Ленивец">
-                <div class="elements__bar">
-                    <h2 class="elements__title">Никола-Ленивец</h2>
-                    <button class="elements__like-button" type="button"></button>
+            <div class="card">
+                <img class="card__photo" src="images/nikola-lenivets.png" alt="Никола-Ленивец">
+                <div class="card__bar">
+                    <h2 class="card__title">Никола-Ленивец</h2>
+                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
                 </div>
             </div>
-            <div class="elements__element">
-                <img class="elements__photo" src="images/staraya-russa.png" alt="Старая Русса">
-                <div class="elements__bar">
-                    <h2 class="elements__title">Старая Русса</h2>
-                    <button class="elements__like-button" type="button"></button>
+            <div class="card">
+                <img class="card__photo" src="images/staraya-russa.png" alt="Старая Русса">
+                <div class="card__bar">
+                    <h2 class="card__title">Старая Русса</h2>
+                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
                 </div>
             </div>
-            <div class="elements__element">
-                <img class="elements__photo" src="images/karadag.png" alt="Карадаг">
-                <div class="elements__bar">
-                    <h2 class="elements__title">Карадаг</h2>
-                    <button class="elements__like-button" type="button"></button>
+            <div class="card">
+                <img class="card__photo" src="images/karadag.png" alt="Карадаг">
+                <div class="card__bar">
+                    <h2 class="card__title">Карадаг</h2>
+                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
                 </div>
             </div>
         </section>
@@ -79,7 +80,7 @@
                 <input class="popup__input popup__input_content_description" type="text" name="input-description" placeholder="Исследователь океана">
                 <button class="popup__submit-button" type="submit">Сохранить</button>
             </form>
-            <button class="popup__close-button" type="button"></button>
+            <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
         </div>
     </div>
     <script src="scripts/index.js"></script> 

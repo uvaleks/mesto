@@ -7,6 +7,8 @@
     background-repeat: no-repeat;
     background-position: center;
     border: 2px var(--text) solid;
+    border-radius: 2px;
+    padding: 0;
     box-sizing: border-box;
     opacity: 1;
     transition: opacity .15s ease, all .5s ease;
@@ -20,7 +22,6 @@
 @media screen and (max-width: 615px) {
     .profile__add-button {
         width: 100%;
-        margin: 0;
     }   
 }
 

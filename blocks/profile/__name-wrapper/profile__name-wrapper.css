@@ -2,16 +2,19 @@
     display: flex;
     max-width: min-content;
     gap: 18px;
+    transition: all .5s ease;
 }
 
 @media screen and (max-width: 615px) {
     .profile__name-wrapper {
         margin: 0 auto;
+        transform: translateX(21px);
     }   
 }
 
 @media screen and (max-width: 425px) {
     .profile__name-wrapper {
-        gap: 15px;
+        gap: 10px;
+        transform: translateX(14px);
     }   
 }
