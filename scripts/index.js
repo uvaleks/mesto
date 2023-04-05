@@ -6,6 +6,59 @@ let nameInput = formElement.querySelector('.popup__input_content_name')
 let jobInput = formElement.querySelector('.popup__input_content_description')
 let closeButton = formElement.querySelector('.popup__close-button')
 
+const initialCards = [
+    {
+      name: 'Карадаг',
+      link: 'images/karadag.png'
+    },
+    {
+      name: 'Старая Русса',
+      link: 'images/staraya-russa.png'
+    },
+    {
+      name: 'Никола-Ленивец',
+      link: 'images/nikola-lenivets.png'
+    },
+    {
+      name: 'Байкал',
+      link: 'images/baikal.png'
+    },
+    {
+      name: 'Соловки',
+      link: 'images/solovki.png'
+    },
+    {
+      name: 'Териберка',
+      link: 'images/teriberka.png'
+    }
+]; 
+
+const cardTemplate = document.querySelector('.card-template');
+const cardGrid = document.querySelector('.elements');
+
+const generateCard = (cardData) => {
+    const templateContent = cardTemplate.content.querySelector('.card').cloneNode(true);
+
+    const cardTitle = templateContent.querySelector('.card__title');
+    const cardPhoto = templateContent.querySelector('.card__photo');
+
+    cardTitle.textContent = cardData.name;
+    cardPhoto.src = cardData.link;
+    cardPhoto.alt = cardData.name;
+
+    return templateContent;
+};
+
+const renderCard = (createdCard) => {
+    cardGrid.prepend(createdCard);
+};
+
+initialCards.forEach((initalCard) => {
+    const createdCard = generateCard(initalCard);
+    renderCard(createdCard);
+});
+
+
 function togglePopup () {
     if (formElement.classList.contains("popup_opened") === false) {
     nameInput.value = profileName.textContent;

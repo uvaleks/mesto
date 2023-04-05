@@ -25,48 +25,6 @@
             <button class="profile__add-button" type="button" aria-label="Добавить"></button>
         </section>
         <section class="elements">
-            <article class="card">
-                <img class="card__photo" src="images/teriberka.png" alt="Териберка">
-                <div class="card__bar">
-                    <h2 class="card__title">Териберка</h2>
-                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
-                </div>
-            </article>
-            <article class="card">
-                <img class="card__photo" src="images/solovki.png" alt="Соловки">
-                <div class="card__bar">
-                    <h2 class="card__title">Соловки</h2>
-                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
-                </div>
-            </article>
-            <article class="card">
-                <img class="card__photo" src="images/baikal.png" alt="Байкал">
-                <div class="card__bar">
-                    <h2 class="card__title">Байкал</h2>
-                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
-                </div>
-            </article>
-            <article class="card">
-                <img class="card__photo" src="images/nikola-lenivets.png" alt="Никола-Ленивец">
-                <div class="card__bar">
-                    <h2 class="card__title">Никола-Ленивец</h2>
-                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
-                </div>
-            </article>
-            <article class="card">
-                <img class="card__photo" src="images/staraya-russa.png" alt="Старая Русса">
-                <div class="card__bar">
-                    <h2 class="card__title">Старая Русса</h2>
-                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
-                </div>
-            </article>
-            <article class="card">
-                <img class="card__photo" src="images/karadag.png" alt="Карадаг">
-                <div class="card__bar">
-                    <h2 class="card__title">Карадаг</h2>
-                    <button class="card__like-button" type="button" aria-label="Нравится"></button>
-                </div>
-            </article>
         </section>
     </main>
     <footer class="footer">
@@ -83,6 +41,17 @@
             <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
         </div>
     </div>
+
+    <template class="card-template">
+        <article class="card">
+            <img class="card__photo" src="" alt="">
+            <div class="card__bar">
+                <h2 class="card__title"></h2>
+                <button class="card__like-button" type="button" aria-label="Нравится"></button>
+            </div>
+        </article>
+    </template>
+
     <script src="scripts/index.js"></script> 
 </body>
 </html>
