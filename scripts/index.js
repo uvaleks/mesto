@@ -46,6 +46,20 @@ const generateCard = (cardData) => {
     cardPhoto.src = cardData.link;
     cardPhoto.alt = cardData.name;
 
+    const likeButton = templateContent.querySelector('.card__like-button');
+    const deleteButton = templateContent.querySelector('.card__delete-button');
+
+    const deleteCard = () => {
+        templateContent.remove();
+    };
+
+    const likeCard = () => {
+        likeButton.classList.toggle('card__like-button_active');
+    };
+
+    likeButton.addEventListener('click', likeCard);
+    deleteButton.addEventListener('click', deleteCard);
+
     return templateContent;
 };
 
