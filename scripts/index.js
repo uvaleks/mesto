@@ -1,34 +1,29 @@
-let editButton = document.querySelector('.profile__edit-button')
-let profileName = document.querySelector('.profile__profile-name')
-let profileJob = document.querySelector('.profile__profile-description')
-let formElement = document.querySelector('.popup')
-let nameInput = formElement.querySelector('.popup__input_content_name')
-let jobInput = formElement.querySelector('.popup__input_content_description')
-let closeButton = formElement.querySelector('.popup__close-button')
+const popupBG = document.querySelector('.popup')
+
 
 const initialCards = [
     {
-      name: 'Карадаг',
+      place: 'Карадаг',
       link: 'images/karadag.png'
     },
     {
-      name: 'Старая Русса',
+      place: 'Старая Русса',
       link: 'images/staraya-russa.png'
     },
     {
-      name: 'Никола-Ленивец',
+      place: 'Никола-Ленивец',
       link: 'images/nikola-lenivets.png'
     },
     {
-      name: 'Байкал',
+      place: 'Байкал',
       link: 'images/baikal.png'
     },
     {
-      name: 'Соловки',
+      place: 'Соловки',
       link: 'images/solovki.png'
     },
     {
-      name: 'Териберка',
+      place: 'Териберка',
       link: 'images/teriberka.png'
     }
 ]; 
@@ -42,9 +37,9 @@ const generateCard = (cardData) => {
     const cardTitle = templateContent.querySelector('.card__title');
     const cardPhoto = templateContent.querySelector('.card__photo');
 
-    cardTitle.textContent = cardData.name;
+    cardTitle.textContent = cardData.place;
     cardPhoto.src = cardData.link;
-    cardPhoto.alt = cardData.name;
+    cardPhoto.alt = cardData.place;
 
     const likeButton = templateContent.querySelector('.card__like-button');
     const deleteButton = templateContent.querySelector('.card__delete-button');
@@ -72,25 +67,86 @@ initialCards.forEach((initalCard) => {
     renderCard(createdCard);
 });
 
+const editButton = document.querySelector('.profile__edit-button');
+const popupEditProfile = document.querySelector('.popup__type_edit');
 
-function togglePopup () {
-    if (formElement.classList.contains("popup_opened") === false) {
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileJob.textContent;
-    formElement.classList.toggle('popup_opened');
+const addButton = document.querySelector('.profile__add-button');
+const popupAddCard = document.querySelector('.popup__type_add');
+
+const togglePopup = (popup) => {
+    if (popup.classList.contains("popup_opened") === false) {
+    popup.classList.toggle('popup_opened');
     } else {
-    formElement.classList.toggle('popup_opened');
+    popup.classList.toggle('popup_opened');
     }
 }
 
-editButton.addEventListener('click', togglePopup); 
-closeButton.addEventListener('click', togglePopup); 
+editButton.addEventListener('click', () => {
+    togglePopup(popupEditProfile);
+}); 
 
-function handleFormSubmit (evt) {
+const closeEditPopupButton = popupEditProfile.querySelector('.popup__close-button');
+
+closeEditPopupButton.addEventListener('click', () => {
+    togglePopup(popupEditProfile);
+});
+
+const closeAddPopupButton = popupAddCard.querySelector('.popup__close-button');
+
+closeAddPopupButton.addEventListener('click', () => {
+    togglePopup(popupAddCard);
+});
+
+addButton.addEventListener('click', () => {
+    togglePopup(popupAddCard);
+}); 
+
+const profileName = document.querySelector('#profile-name')
+const profileJob = document.querySelector('#profile-description')
+const nameInput = popupEditProfile.querySelector('input[name="input-name"]');
+const jobInput = popupEditProfile.querySelector('input[name="input-description"]');
+
+
+function handleEditFormSubmit (evt) {
     evt.preventDefault();
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
-    togglePopup();
+    if (nameInput.value !== '') {
+        profileName.textContent = nameInput.value;
+    } else; 
+    if (jobInput.value !== '') {
+        profileJob.textContent = jobInput.value;
+    } else; 
+    togglePopup(popupEditProfile);
 }
 
-formElement.addEventListener('submit', handleFormSubmit); 
+function handleAddFormSubmit (evt) {
+    evt.preventDefault();
+
+    const cardInput = popupAddCard.querySelector('input[name="input-place"]');
+    const srcInput = popupAddCard.querySelector('input[name="input-link"]');
+    if ((imageExists(srcInput.value) !== 404) && (cardInput.value !== '')) {
+        const place = cardInput.value;
+        const link = srcInput.value;
+
+        const createdCard = {
+            place,
+            link,
+        };    
+        togglePopup(popupAddCard);
+        renderCard(generateCard(createdCard));
+    } else if (imageExists(srcInput.value) === 404) {
+        srcInput.value = '';
+        srcInput.placeholder = 'Картинка не найдена';
+    } else;
+}
+
+function imageExists(image_url){
+
+    var http = new XMLHttpRequest();
+
+    http.open('HEAD', image_url, false);
+    http.send();
+    return http.status;
+}
+
+popupEditProfile.addEventListener('submit', handleEditFormSubmit);
+popupAddCard.addEventListener('submit', handleAddFormSubmit); 
