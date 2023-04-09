@@ -1,6 +1,3 @@
-const popupBG = document.querySelector('.popup')
-
-
 const initialCards = [
     {
       place: 'Карадаг',
@@ -43,6 +40,7 @@ const generateCard = (cardData) => {
 
     const likeButton = templateContent.querySelector('.card__like-button');
     const deleteButton = templateContent.querySelector('.card__delete-button');
+    
 
     const deleteCard = () => {
         templateContent.remove();
@@ -52,8 +50,40 @@ const generateCard = (cardData) => {
         likeButton.classList.toggle('card__like-button_active');
     };
 
+
+
     likeButton.addEventListener('click', likeCard);
     deleteButton.addEventListener('click', deleteCard);
+ 
+    const popupPhoto = document.querySelector('.popup__type_photo');
+    const closePhotoPopupButton = popupPhoto.querySelector('.popup__close-button');
+    console.log(closePhotoPopupButton);
+
+    const togglePhotoPopup = (popup, src, title) => {
+        const popupPhoto = popup.querySelector('.popup__photo');
+        popupPhoto.src = src;
+
+        const popupPhotoTitle = popup.querySelector('.popup__photo-title');
+        popupPhotoTitle.textContent = title;
+
+        if (popup.classList.contains("popup_opened") === false) {
+            popup.classList.toggle('popup_opened');
+        } else {
+            popup.classList.toggle('popup_opened');
+        }
+        };
+
+    const closePhotoPopup = (popup) => {
+        popup.classList.remove('popup_opened');
+    };
+
+    cardPhoto.addEventListener('click', () => {
+        togglePhotoPopup(popupPhoto, cardPhoto.src, cardPhoto.alt)
+    });
+
+    closePhotoPopupButton.addEventListener('click', () => {
+        closePhotoPopup(popupPhoto);
+    });
 
     return templateContent;
 };
@@ -149,4 +179,4 @@ function imageExists(image_url){
 }
 
 popupEditProfile.addEventListener('submit', handleEditFormSubmit);
-popupAddCard.addEventListener('submit', handleAddFormSubmit); 
+popupAddCard.addEventListener('submit', handleAddFormSubmit);
