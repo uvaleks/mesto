@@ -65,6 +65,7 @@ const generateCard = (cardData) => {
 
         const popupPhotoTitle = popup.querySelector('.popup__photo-title');
         popupPhotoTitle.textContent = title;
+        popupPhoto.alt = title;
 
         if (popup.classList.contains("popup_opened") === false) {
             popup.classList.toggle('popup_opened');
