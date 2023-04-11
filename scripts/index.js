@@ -28,10 +28,6 @@ const openPopup = (popup) => {
 
 const closePopup = (popup) => {
     popup.classList.remove('popup_opened');
-    const closedPopupForm = popup.querySelector('.popup__edit-form');
-    if (closedPopupForm !== null) {
-        closedPopupForm.reset();
-    };
 };
 
 const generateCard = (cardData) => {
@@ -88,25 +84,38 @@ const renderInitialCard = (createdCard) => {
 
 const handleEditFormSubmit = (evt) => {
     evt.preventDefault();
+
     if (nameInput.value !== '') {
         profileName.textContent = nameInput.value;
     }; 
     if (jobInput.value !== '') {
         profileJob.textContent = jobInput.value;
-    }; 
+    };
+
     closePopup(popupEditProfile);
+    resetPopupForm(popupEditProfile);
 };
 
 const handleAddFormSubmit = (evt) => {
     evt.preventDefault();
+
     const place = cardInput.value;
     const link = srcInput.value;
     const createdCard = {
         place,
         link,
     };
+
     closePopup(popupAddCard);
+    resetPopupForm(popupAddCard);
     renderCard(generateCard(createdCard));
+};
+
+const resetPopupForm = (popup) => {
+    const popupForm = popup.querySelector('.popup__edit-form');
+    if (popupForm !== null) {
+        popupForm.reset();
+    };
 };
 
 initialCards.forEach((initalCard) => {
