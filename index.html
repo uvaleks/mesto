@@ -36,7 +36,9 @@
             <form class="popup__edit-form" name="edit-form">
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <input class="popup__input popup__input_content_name" type="text" name="input-name" placeholder="Жак-Ив Кусто">
+                <span class="input-name-error popup__input-error"></span>
                 <input class="popup__input popup__input_content_description" type="text" name="input-description" placeholder="Исследователь океана">
+                <span class="input-description-error popup__input-error"></span>
                 <button class="popup__submit-button" type="submit">Сохранить</button>
             </form>
             <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
@@ -46,9 +48,11 @@
     <div class="popup popup__type_add">
         <div class="popup__container">
             <form class="popup__edit-form" name="add-form">
-                <h2 class="popup__title">Добавить место</h2>
+                <h2 class="popup__title">Новое место</h2>
                 <input class="popup__input popup__input_content_name" type="text" name="input-place" placeholder="Название">
+                <span class="input-place-error popup__input-error"></span>
                 <input class="popup__input popup__input_content_description" type="text" name="input-link" placeholder="Ссылка на картинку">
+                <span class="input-link-error popup__input-error"></span>
                 <button class="popup__submit-button" type="submit">Создать</button>
             </form>
             <button class="popup__close-button" type="button" aria-label="Закрыть"></button>

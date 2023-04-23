@@ -11,5 +11,9 @@
 }
 
 .popup__input:last-of-type {
-    padding-top: 30px;
+    padding-top: 13px;
+}
+
+.popup__input:invalid {
+    border-bottom: 1px rgba(255,0,0,1) solid;
 }
