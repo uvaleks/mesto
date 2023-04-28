@@ -57,7 +57,6 @@ const generateCard = (cardData) => {
  
     const popupPhoto = document.querySelector('.popup__type_photo');
     const closePhotoPopupButton = popupPhoto.querySelector('.popup__close-button');
-    console.log(closePhotoPopupButton);
 
     const togglePhotoPopup = (popup, src, title) => {
         const popupPhoto = popup.querySelector('.popup__photo');
@@ -104,11 +103,17 @@ const popupEditProfile = document.querySelector('.popup__type_edit');
 const addButton = document.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('.popup__type_add');
 
+const cardInput = popupAddCard.querySelector('input[name="input-place"]');
+const srcInput = popupAddCard.querySelector('input[name="input-link"]');
+
 const togglePopup = (popup) => {
     if (popup.classList.contains("popup_opened") === false) {
-    popup.classList.toggle('popup_opened');
+    popup.classList.add('popup_opened');
+    cardInput.value = '';
+    srcInput.value = '';
+    toggleSubmitButtonActivity('.popup__submit-button', 'popup__submit-button_disabled', popup.querySelector('.popup__edit-form'));
     } else {
-    popup.classList.toggle('popup_opened');
+    popup.classList.remove('popup_opened');
     }
 }
 
@@ -142,18 +147,19 @@ function handleEditFormSubmit (evt) {
     evt.preventDefault();
     if (nameInput.value !== '') {
         profileName.textContent = nameInput.value;
+        nameInput.value = profileName.textContent;
     } else; 
     if (jobInput.value !== '') {
         profileJob.textContent = jobInput.value;
+        jobInput.value = profileJob.textContent;
     } else; 
     togglePopup(popupEditProfile);
 }
 
 function handleAddFormSubmit (evt) {
+
     evt.preventDefault();
 
-    const cardInput = popupAddCard.querySelector('input[name="input-place"]');
-    const srcInput = popupAddCard.querySelector('input[name="input-link"]');
     if ((imageExists(srcInput.value) !== 404) && (cardInput.value !== '')) {
         const place = cardInput.value;
         const link = srcInput.value;

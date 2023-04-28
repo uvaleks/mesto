@@ -8,12 +8,5 @@
     line-height: 17px;
     outline: none;
     box-sizing: border-box;
-}
-
-.popup__input:last-of-type {
-    padding-top: 13px;
-}
-
-.popup__input:invalid {
-    border-bottom: 1px rgba(255,0,0,1) solid;
+    transition: border-bottom .5s ease;
 }
