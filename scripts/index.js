@@ -106,35 +106,47 @@ const popupAddCard = document.querySelector('.popup__type_add');
 const cardInput = popupAddCard.querySelector('input[name="input-place"]');
 const srcInput = popupAddCard.querySelector('input[name="input-link"]');
 
-const togglePopup = (popup) => {
-    if (popup.classList.contains("popup_opened") === false) {
+const closePopup = (popup) => {
+    popup.classList.remove('popup_opened');
+};
+
+const openPopup = (popup) => {
     popup.classList.add('popup_opened');
     cardInput.value = '';
     srcInput.value = '';
-    toggleSubmitButtonActivity('.popup__submit-button', 'popup__submit-button_disabled', popup.querySelector('.popup__edit-form'));
-    } else {
-    popup.classList.remove('popup_opened');
-    }
-}
+    toggleSubmitButtonActivity('.popup__submit-button', 'popup__submit-button_disabled', popup.querySelector('.popup__edit-form'), '.popup__input');
+
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            closePopup(popup);
+        };
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closePopup(popup);
+        };
+    });
+};
 
 editButton.addEventListener('click', () => {
-    togglePopup(popupEditProfile);
+    openPopup(popupEditProfile);
 }); 
 
 const closeEditPopupButton = popupEditProfile.querySelector('.popup__close-button');
 
 closeEditPopupButton.addEventListener('click', () => {
-    togglePopup(popupEditProfile);
+    closePopup(popupEditProfile);
 });
 
 const closeAddPopupButton = popupAddCard.querySelector('.popup__close-button');
 
 closeAddPopupButton.addEventListener('click', () => {
-    togglePopup(popupAddCard);
+    closePopup(popupAddCard);
 });
 
 addButton.addEventListener('click', () => {
-    togglePopup(popupAddCard);
+    openPopup(popupAddCard);
 }); 
 
 const profileName = document.querySelector('#profile-name')
@@ -153,7 +165,7 @@ function handleEditFormSubmit (evt) {
         profileJob.textContent = jobInput.value;
         jobInput.value = profileJob.textContent;
     } else; 
-    togglePopup(popupEditProfile);
+    closePopup(popupEditProfile);
 }
 
 function handleAddFormSubmit (evt) {
@@ -168,7 +180,7 @@ function handleAddFormSubmit (evt) {
             place,
             link,
         };    
-        togglePopup(popupAddCard);
+        closePopup(popupAddCard);
         renderCard(generateCard(createdCard));
     } else if (imageExists(srcInput.value) === 404) {
         srcInput.value = '';
@@ -187,3 +199,4 @@ function imageExists(image_url){
 
 popupEditProfile.addEventListener('submit', handleEditFormSubmit);
 popupAddCard.addEventListener('submit', handleAddFormSubmit);
+

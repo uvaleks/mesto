@@ -21,7 +21,7 @@ const setInputInvalidState = (config, input) => {
 const checkInputValidity = (config, input) => {
     const errorElement = document.querySelector(`.${input.name}-error`);
 
-    if (input.checkValidity()) {
+    if (input.validity.valid) {
         setInputValidState(config, input);
         hideValidationMessage(config, errorElement);
     } else {
@@ -40,9 +40,19 @@ const disableSubmitButton = (inactiveButtonClass, submitButton) => {
     submitButton.classList.add(inactiveButtonClass);
 };
 
-const toggleSubmitButtonActivity = (submitButtonSelector, inactiveButtonClass, form) => {
+const hasInvalidInput = (form, inputSelector) => {
+    const inputs = form.querySelectorAll(inputSelector);
+    const inputsList = Array.from(inputs);
+
+    return inputsList.some((inputElement) => { 
+      return !inputElement.validity.valid;
+    })
+}; 
+
+const toggleSubmitButtonActivity = (submitButtonSelector, inactiveButtonClass, form, inputSelector) => {
     const submitButton = form.querySelector(submitButtonSelector);
-    if (form.checkValidity()) {
+
+    if (!hasInvalidInput(form, inputSelector)) {
         enableSubmitButton(inactiveButtonClass, submitButton);
     } else {
         disableSubmitButton(inactiveButtonClass, submitButton);
@@ -54,14 +64,14 @@ const setListenters = (config, formsList) => {
         const inputs = form.querySelectorAll(config.inputSelector);
         const inputsList = Array.from(inputs);
 
-        toggleSubmitButtonActivity(config.submitButtonSelector, config.inactiveButtonClass, form);
+        toggleSubmitButtonActivity(config.submitButtonSelector, config.inactiveButtonClass, form, config.inputSelector);
 
         inputsList.forEach((input) => {
             setInputValidState(config, input);
 
             input.addEventListener('input', () => {
                 checkInputValidity(config, input);
-                toggleSubmitButtonActivity(config.submitButtonSelector, config.inactiveButtonClass, form);
+                toggleSubmitButtonActivity(config.submitButtonSelector, config.inactiveButtonClass, form, config.inputSelector);
             });
         });
     });
