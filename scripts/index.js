@@ -53,7 +53,7 @@ const generateCard = (cardData) => {
     likeButton.addEventListener('click', likeCard);
     deleteButton.addEventListener('click', deleteCard);
  
-    const popupPhoto = document.querySelector('.popup__type_photo');
+    const popupPhoto = document.querySelector('.popup_type_photo');
     const closePhotoPopupButton = popupPhoto.querySelector('.popup__close-button');
 
     const openPhotoPopup = (popup, src, title) => {
@@ -92,10 +92,10 @@ initialCards.forEach((initalCard) => {
 });
 
 const editButton = document.querySelector('.profile__edit-button');
-const popupEditProfile = document.querySelector('.popup__type_edit');
+const popupEditProfile = document.querySelector('.popup_type_edit');
 
 const addButton = document.querySelector('.profile__add-button');
-const popupAddCard = document.querySelector('.popup__type_add');
+const popupAddCard = document.querySelector('.popup_type_add');
 
 const cardInput = popupAddCard.querySelector('input[name="input-place"]');
 const srcInput = popupAddCard.querySelector('input[name="input-link"]');
