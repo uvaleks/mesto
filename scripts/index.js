@@ -50,15 +50,13 @@ const generateCard = (cardData) => {
         likeButton.classList.toggle('card__like-button_active');
     };
 
-
-
     likeButton.addEventListener('click', likeCard);
     deleteButton.addEventListener('click', deleteCard);
  
     const popupPhoto = document.querySelector('.popup__type_photo');
     const closePhotoPopupButton = popupPhoto.querySelector('.popup__close-button');
 
-    const togglePhotoPopup = (popup, src, title) => {
+    const openPhotoPopup = (popup, src, title) => {
         const popupPhoto = popup.querySelector('.popup__photo');
         popupPhoto.src = src;
 
@@ -66,23 +64,19 @@ const generateCard = (cardData) => {
         popupPhotoTitle.textContent = title;
         popupPhoto.alt = title;
 
-        if (popup.classList.contains("popup_opened") === false) {
-            popup.classList.toggle('popup_opened');
-        } else {
-            popup.classList.toggle('popup_opened');
-        }
-        };
+        popup.classList.add('popup_opened');
 
-    const closePhotoPopup = (popup) => {
-        popup.classList.remove('popup_opened');
+        popup.addEventListener('click', checkClickForClosingCondition);
+
+        document.addEventListener('keydown', checkKeydownForClosingCondition);
     };
 
     cardPhoto.addEventListener('click', () => {
-        togglePhotoPopup(popupPhoto, cardPhoto.src, cardPhoto.alt)
+        openPhotoPopup(popupPhoto, cardPhoto.src, cardPhoto.alt)
     });
 
     closePhotoPopupButton.addEventListener('click', () => {
-        closePhotoPopup(popupPhoto);
+        closePopup();
     });
 
     return templateContent;
@@ -124,9 +118,11 @@ const checkKeydownForClosingCondition = (e) => {
 };
 
 const closePopup = () => {
+    if (findOpenPopup() !== null) {
     findOpenPopup().removeEventListener('click', checkClickForClosingCondition);
     document.removeEventListener('keydown', checkKeydownForClosingCondition);
     findOpenPopup().classList.remove('popup_opened');
+    };
 };
 
 const openPopup = (popup) => {
