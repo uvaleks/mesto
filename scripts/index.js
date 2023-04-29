@@ -106,8 +106,27 @@ const popupAddCard = document.querySelector('.popup__type_add');
 const cardInput = popupAddCard.querySelector('input[name="input-place"]');
 const srcInput = popupAddCard.querySelector('input[name="input-link"]');
 
-const closePopup = (popup) => {
-    popup.classList.remove('popup_opened');
+const findOpenPopup = () => {
+    const openedPopup = document.querySelector('.popup_opened');
+    return openedPopup;
+};
+
+const checkClickForClosingCondition = (e) => {
+    if (e.target === findOpenPopup()) {
+        closePopup();
+    };
+};
+
+const checkKeydownForClosingCondition = (e) => {
+    if (e.key === 'Escape') {
+        closePopup();
+    };
+};
+
+const closePopup = () => {
+    findOpenPopup().removeEventListener('click', checkClickForClosingCondition);
+    document.removeEventListener('keydown', checkKeydownForClosingCondition);
+    findOpenPopup().classList.remove('popup_opened');
 };
 
 const openPopup = (popup) => {
@@ -116,17 +135,9 @@ const openPopup = (popup) => {
     srcInput.value = '';
     toggleSubmitButtonActivity('.popup__submit-button', 'popup__submit-button_disabled', popup.querySelector('.popup__edit-form'), '.popup__input');
 
-    popup.addEventListener('click', (e) => {
-        if (e.target === popup) {
-            closePopup(popup);
-        };
-    });
+    popup.addEventListener('click', checkClickForClosingCondition);
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            closePopup(popup);
-        };
-    });
+    document.addEventListener('keydown', checkKeydownForClosingCondition);
 };
 
 editButton.addEventListener('click', () => {
@@ -136,13 +147,13 @@ editButton.addEventListener('click', () => {
 const closeEditPopupButton = popupEditProfile.querySelector('.popup__close-button');
 
 closeEditPopupButton.addEventListener('click', () => {
-    closePopup(popupEditProfile);
+    closePopup();
 });
 
 const closeAddPopupButton = popupAddCard.querySelector('.popup__close-button');
 
 closeAddPopupButton.addEventListener('click', () => {
-    closePopup(popupAddCard);
+    closePopup();
 });
 
 addButton.addEventListener('click', () => {
@@ -165,7 +176,7 @@ function handleEditFormSubmit (evt) {
         profileJob.textContent = jobInput.value;
         jobInput.value = profileJob.textContent;
     } else; 
-    closePopup(popupEditProfile);
+    closePopup();
 }
 
 function handleAddFormSubmit (evt) {
@@ -180,7 +191,7 @@ function handleAddFormSubmit (evt) {
             place,
             link,
         };    
-        closePopup(popupAddCard);
+        closePopup();
         renderCard(generateCard(createdCard));
     } else if (imageExists(srcInput.value) === 404) {
         srcInput.value = '';
