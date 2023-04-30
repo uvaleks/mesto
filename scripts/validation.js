@@ -1,7 +1,6 @@
 const hideValidationMessage = (config, errorElement) => {
     errorElement.textContent = '';
     errorElement.classList.remove(config.errorClass);
-    errorElement.style.opacity = '0';
 };
 
 const setInputValidState = (config, input) => {
@@ -11,7 +10,6 @@ const setInputValidState = (config, input) => {
 const showValidationMessage = (config, input, errorElement) => {
     errorElement.textContent = input.validationMessage;
     errorElement.classList.add(config.errorClass);
-    errorElement.style.opacity = '1';
 };
 
 const setInputInvalidState = (config, input) => {
@@ -73,6 +71,12 @@ const setListenters = (config, formsList) => {
                 checkInputValidity(config, input);
                 toggleSubmitButtonActivity(config.submitButtonSelector, config.inactiveButtonClass, form, config.inputSelector);
             });
+
+            editButton.addEventListener('click', () => {
+                checkInputValidity(config, input);
+                toggleSubmitButtonActivity(config.submitButtonSelector, config.inactiveButtonClass, form, config.inputSelector);
+            });
+
         });
     });
 };
