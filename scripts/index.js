@@ -114,11 +114,16 @@ const checkKeydownForClosingCondition = (e) => {
     };
 };
 
+const inputsList = document.querySelectorAll('.popup__input');
+const errorsList = document.querySelectorAll('.popup__input-error');
+
 const clearValidationMessages = () => {
-    cardInput.classList.remove('popup__input_invalid');
-    srcInput.classList.remove('popup__input_invalid');
-    inputPlaceError.classList.remove('popup__input-error_visible');
-    inputLinkError.classList.remove('popup__input-error_visible');    
+    inputsList.forEach((input) => {
+        input.classList.remove('popup__input_invalid');
+    });
+    errorsList.forEach((error) => {
+        error.classList.remove('popup__input-error_visible');
+    }); 
 };
 
 const closePopup = () => {
@@ -147,17 +152,18 @@ const prepareEditProfilePopup = (popup) => {
     toggleSubmitButtonActivity('.popup__submit-button', 'popup__submit-button_disabled', popup.querySelector('.popup__edit-form'), '.popup__input');
 };
 
-const openPopup = (popup) => {
-    popup.classList.add('popup_opened');
-
+const definePopupForPrep = (popup) => {
     if (popup.classList.contains('popup_type_add')) {
         prepareAddCardPopup(popup);
     } else if (popup.classList.contains('popup_type_edit')) {
         prepareEditProfilePopup(popup);
     };
+};
 
+const openPopup = (popup) => {
+    popup.classList.add('popup_opened');
+    definePopupForPrep(popup);
     popup.addEventListener('click', checkClickForClosingCondition);
-
     document.addEventListener('keydown', checkKeydownForClosingCondition);
 };
 
