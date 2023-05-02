@@ -139,40 +139,25 @@ const profileJob = document.querySelector('#profile-description')
 const nameInput = popupEditProfile.querySelector('input[name="input-name"]');
 const jobInput = popupEditProfile.querySelector('input[name="input-description"]');
 
-const prepareAddCardPopup = (popup) => {
-    cardInput.value = '';
-    srcInput.value = '';
-    clearValidationMessages();
-    toggleSubmitButtonActivity('.popup__submit-button', 'popup__submit-button_disabled', popup.querySelector('.popup__edit-form'), '.popup__input');
-};
-
-const prepareEditProfilePopup = (popup) => {
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileJob.textContent;
-    toggleSubmitButtonActivity('.popup__submit-button', 'popup__submit-button_disabled', popup.querySelector('.popup__edit-form'), '.popup__input');
-};
-
-const definePopupForPrep = (popup) => {
-    if (popup.classList.contains('popup_type_add')) {
-        prepareAddCardPopup(popup);
-    } else if (popup.classList.contains('popup_type_edit')) {
-        prepareEditProfilePopup(popup);
-    };
-};
-
 const openPopup = (popup) => {
     popup.classList.add('popup_opened');
-    definePopupForPrep(popup);
     popup.addEventListener('click', checkClickForClosingCondition);
     document.addEventListener('keydown', checkKeydownForClosingCondition);
 };
 
 editButton.addEventListener('click', () => {
     openPopup(popupEditProfile);
+    nameInput.value = profileName.textContent;
+    jobInput.value = profileJob.textContent;
+    toggleSubmitButtonActivity('.popup__submit-button', 'popup__submit-button_disabled', popupEditProfile, '.popup__input');
 }); 
 
 addButton.addEventListener('click', () => {
     openPopup(popupAddCard);
+    cardInput.value = '';
+    srcInput.value = '';
+    clearValidationMessages();
+    toggleSubmitButtonActivity('.popup__submit-button', 'popup__submit-button_disabled', popupAddCard, '.popup__input');
 }); 
 
 function handleEditFormSubmit (evt) {
