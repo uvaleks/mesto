@@ -129,7 +129,7 @@ const openPopup = (popup) => {
     popup.classList.add('popup_opened');
     cardInput.value = '';
     srcInput.value = '';
-    toggleSubmitButtonActivity('.popup__submit-button', 'popup__submit-button_disabled', popup.querySelector('.popup__edit-form'), '.popup__input');
+    //toggleSubmitButtonActivity('.popup__submit-button', 'popup__submit-button_disabled', popup.querySelector('.popup__edit-form'), '.popup__input');
 
     popup.addEventListener('click', checkClickForClosingCondition);
 
