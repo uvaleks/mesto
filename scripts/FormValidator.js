@@ -1,12 +1,4 @@
-const validationConfig = {
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__submit-button',
-    inactiveButtonClass: 'popup__submit-button_disabled',
-    inputErrorClass: 'popup__input_invalid',
-    errorClass: 'popup__input-error_visible'
-}
-
-class FormValidator {
+export class FormValidator {
     constructor (settings, formSelector) {
         this._formSelector = formSelector;
         this._form = document.querySelector(this._formSelector);
@@ -93,12 +85,4 @@ class FormValidator {
         this._setListenters();
     }
 }
-
-const EditFormValidator = new FormValidator(validationConfig, '.popup__edit-form');
-
-const AddFormValidator = new FormValidator(validationConfig, '.popup__add-form');
-
-EditFormValidator.enableValidation();
-
-AddFormValidator.enableValidation();
 
