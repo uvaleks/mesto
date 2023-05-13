@@ -11,7 +11,7 @@ export class Card {
         this._cardImgSrc = cardData.link;
         this._likeButton = this._templateContent.querySelector('.card__like-button');
         this._deleteButton = this._templateContent.querySelector('.card__delete-button');
-        this._popupPhoto = document.querySelector('.popup__type_photo');
+        this._popupPhoto = document.querySelector('.popup_type_photo');
     }
 
     _deleteCard(card) {

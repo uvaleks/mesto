@@ -52,10 +52,10 @@ export const openPhotoPopup = (popup, src, title) => {
 };
 
 const editButton = document.querySelector('.profile__edit-button');
-const popupEditProfile = document.querySelector('.popup__type_edit');
+const popupEditProfile = document.querySelector('.popup_type_edit');
 
 const addButton = document.querySelector('.profile__add-button');
-const popupAddCard = document.querySelector('.popup__type_add');
+const popupAddCard = document.querySelector('.popup_type_add');
 
 const cardInput = popupAddCard.querySelector('input[name="input-place"]');
 const srcInput = popupAddCard.querySelector('input[name="input-link"]');
