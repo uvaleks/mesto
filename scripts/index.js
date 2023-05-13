@@ -87,7 +87,13 @@ const refreshForm = () => {
     document.querySelector(`.${srcInput.name}-error`).classList.remove(validationConfig.errorClass);
 
     nameInput.value = profileName.textContent;
+    nameInput.classList.remove(validationConfig.inputErrorClass);
+    document.querySelector(`.${nameInput.name}-error`).classList.remove(validationConfig.errorClass);
+
     jobInput.value = profileJob.textContent;
+    jobInput.classList.remove(validationConfig.inputErrorClass);
+    document.querySelector(`.${jobInput.name}-error`).classList.remove(validationConfig.errorClass);
+
 };
 
 const closePopup = () => {
