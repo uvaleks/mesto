@@ -31,13 +31,13 @@
         <p class="footer__copyright">© 2023 Mesto Russia</p>
     </footer>
 
-    <div class="popup popup_type_edit">
+    <div class="popup popup__type_edit">
         <div class="popup__container">
             <form class="popup__edit-form" name="edit-form" novalidate>
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <input class="popup__input popup__input_content_name" type="text" name="input-name" placeholder="Имя" value="Жак-Ив Кусто" autocomplete="off" minlength="2" maxlength="40" required>
+                <input class="popup__input popup__input_content_name" type="text" name="input-name" value="Жак-Ив Кусто" autocomplete="off" minlength="2" maxlength="40" required>
                 <span class="input-name-error popup__input-error"></span>
-                <input class="popup__input popup__input_content_description" type="text" name="input-description" placeholder="О себе" value="Исследователь океана" autocomplete="off" minlength="2" maxlength="200" required>
+                <input class="popup__input popup__input_content_description" type="text" name="input-description" value="Исследователь океана" autocomplete="off" minlength="2" maxlength="200" required>
                 <span class="input-description-error popup__input-error"></span>
                 <button class="popup__submit-button" type="submit">Сохранить</button>
             </form>
@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <div class="popup popup_type_add">
+    <div class="popup popup__type_add">
         <div class="popup__container">
             <form class="popup__edit-form popup__add-form" name="add-form" novalidate>
                 <h2 class="popup__title">Новое место</h2>
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div class="popup popup_type_photo">
+    <div class="popup popup__type_photo">
         <div class="popup__photo-wrapper">
             <img class="popup__photo" src="//:0">
             <h2 class="popup__photo-title"></h2>
@@ -69,10 +69,8 @@
 
     <template class="card-template">
         <article class="card">
-            <div class="card__photo-wrapper">
-                <img class="card__photo" src="//:0">
-                <button class="card__delete-button" type="button" aria-label="Удалить"></button>
-            </div>
+            <img class="card__photo" src="//:0">
+            <button class="card__delete-button" type="button" aria-label="Удалить"></button>
             <div class="card__bar">
                 <h2 class="card__title"></h2>
                 <button class="card__like-button" type="button" aria-label="Нравится"></button>
