@@ -11,38 +11,29 @@ export class FormValidator {
         this._inputErrorClass = settings.inputErrorClass;
         this._errorClass = settings.errorClass;
     }
-
-    _hideValidationMessage(errorElement) {
-        errorElement.textContent = '';
-        errorElement.classList.remove(this._errorClass);
-        errorElement.style.opacity = '0';
-    }
-    
-    _setInputValidState(input) {
-        input.classList.remove(this._inputErrorClass);
-    }
-    
-    _showValidationMessage(input, errorElement) {
-        errorElement.textContent = input.validationMessage;
-        errorElement.classList.add(this._errorClass);
-        errorElement.style.opacity = '1';
-    }
-    
-    _setInputInvalidState(input) {
-        input.classList.add(this._inputErrorClass);
-    }
-    
-    _checkInputValidity(input) {
-        const errorElement = this._form.querySelector(`.${input.name}-error`);
-
+  
+    _setInputValidityState(input, errorElement) {
         if (input.validity.valid) {
-            this._setInputValidState(input);
-            this._hideValidationMessage(errorElement);
+            input.classList.remove(this._inputErrorClass);
+            if (errorElement !== undefined) {
+                errorElement.textContent = '';
+                errorElement.classList.remove(this._errorClass);
+            };
         } else {
-            this._setInputInvalidState(input);
-            this._showValidationMessage(input, errorElement);
+            input.classList.add(this._inputErrorClass);
+            errorElement.textContent = input.validationMessage;
+            errorElement.classList.add(this._errorClass);
         };
     }
+
+    refreshValidityState() {
+        this._inputsList.forEach((input) => {
+                const errorElement = this._form.querySelector(`.${input.name}-error`);
+                input.classList.remove(this._inputErrorClass);
+                errorElement.textContent = '';
+                errorElement.classList.remove(this._errorClass);
+            });
+    };
     
     _enableSubmitButton() {
         this._submitButton.removeAttribute('disabled');
@@ -72,10 +63,9 @@ export class FormValidator {
             this._toggleSubmitButtonActivity();
     
             this._inputsList.forEach((input) => {
-                this._setInputValidState(input);
-
                 input.addEventListener('input', () => {
-                    this._checkInputValidity(input);
+                    const errorElement = this._form.querySelector(`.${input.name}-error`);
+                    this._setInputValidityState(input, errorElement);
                     this._toggleSubmitButtonActivity();
                 });
             });

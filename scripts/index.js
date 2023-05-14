@@ -36,19 +36,15 @@ export const initialCards = [
     }
 ]; 
 
-export const openPhotoPopup = (popup, src, title) => {
-    const popupPhoto = popup.querySelector('.popup__photo');
-    popupPhoto.src = src;
+const popupPhotoWrapper = document.querySelector('.popup_type_photo');
+const popupPhoto = document.querySelector('.popup__photo');
+const popupPhotoTitle = document.querySelector('.popup__photo-title');
 
-    const popupPhotoTitle = popup.querySelector('.popup__photo-title');
+export const openPhotoPopup = (src, title) => {
+    popupPhoto.src = src;
     popupPhotoTitle.textContent = title;
     popupPhoto.alt = title;
-
-    popup.classList.add('popup_opened');
-
-    popup.addEventListener('click', checkClickForClosingCondition);
-
-    document.addEventListener('keydown', checkKeydownForClosingCondition);
+    openPopup(popupPhotoWrapper);
 };
 
 const editButton = document.querySelector('.profile__edit-button');
@@ -60,57 +56,43 @@ const popupAddCard = document.querySelector('.popup_type_add');
 const cardInput = popupAddCard.querySelector('input[name="input-place"]');
 const srcInput = popupAddCard.querySelector('input[name="input-link"]');
 
-const findOpenPopup = () => {
-    const openedPopup = document.querySelector('.popup_opened');
-    return openedPopup;
-};
-
 const checkClickForClosingCondition = (e) => {
-    if (e.target === findOpenPopup()) {
-        closePopup();
+    if (e.target.classList.contains('popup')) {
+        closePopup(document.querySelector('.popup_opened'));
     };
 };
 
 const checkKeydownForClosingCondition = (e) => {
     if (e.key === 'Escape') {
-        closePopup();
+        closePopup(document.querySelector('.popup_opened'));
     };
 };
 
-const refreshForm = () => {
-    cardInput.value = '';
-    cardInput.classList.remove(validationConfig.inputErrorClass);
-    document.querySelector(`.${cardInput.name}-error`).classList.remove(validationConfig.errorClass);
-
-    srcInput.value = '';
-    srcInput.classList.remove(validationConfig.inputErrorClass);
-    document.querySelector(`.${srcInput.name}-error`).classList.remove(validationConfig.errorClass);
-
-    nameInput.value = profileName.textContent;
-    nameInput.classList.remove(validationConfig.inputErrorClass);
-    document.querySelector(`.${nameInput.name}-error`).classList.remove(validationConfig.errorClass);
-
-    jobInput.value = profileJob.textContent;
-    jobInput.classList.remove(validationConfig.inputErrorClass);
-    document.querySelector(`.${jobInput.name}-error`).classList.remove(validationConfig.errorClass);
-
+const refreshForm = (popup) => {
+    if (popup.classList.contains('popup_type_edit')) {
+        nameInput.value = profileName.textContent;
+        jobInput.value = profileJob.textContent;
+        editFormValidator.refreshValidityState();
+    } else if (popup.classList.contains('popup_type_add')) {
+        cardInput.value = '';
+        srcInput.value = '';
+        addFormValidator.refreshValidityState();
+    }
 };
 
-const closePopup = () => {
-    if (findOpenPopup() !== null) {
-    findOpenPopup().removeEventListener('click', checkClickForClosingCondition);
-    document.removeEventListener('keydown', checkKeydownForClosingCondition);
-    findOpenPopup().classList.remove('popup_opened');
-    refreshForm();
-    };
+document.addEventListener('keydown', checkKeydownForClosingCondition);
+
+document.querySelectorAll('.popup').forEach((popup) => {
+    popup.addEventListener('click', checkClickForClosingCondition);
+});
+
+const closePopup = (popup) => {
+    refreshForm(popup);
+    popup.classList.remove('popup_opened');
 };
 
 const openPopup = (popup) => {
     popup.classList.add('popup_opened');
-
-    popup.addEventListener('click', checkClickForClosingCondition);
-
-    document.addEventListener('keydown', checkKeydownForClosingCondition);
 };
 
 editButton.addEventListener('click', () => {
@@ -121,7 +103,7 @@ const closePopupButtonList = document.querySelectorAll('.popup__close-button');
 
 closePopupButtonList.forEach((closePopupButton) => {
     closePopupButton.addEventListener('click', () => {
-        closePopup();
+        closePopup(document.querySelector('.popup_opened'));
     });
 });
 
@@ -136,13 +118,9 @@ const jobInput = popupEditProfile.querySelector('input[name="input-description"]
 
 function handleEditFormSubmit (evt) {
     evt.preventDefault();
-    if (nameInput.value !== '') {
-        profileName.textContent = nameInput.value;
-    } else; 
-    if (jobInput.value !== '') {
-        profileJob.textContent = jobInput.value;
-    } else; 
-    closePopup();
+    profileName.textContent = nameInput.value;
+    profileJob.textContent = jobInput.value;
+    closePopup(popupEditProfile);
 }
 
 function handleAddFormSubmit (evt) {
@@ -152,27 +130,30 @@ function handleAddFormSubmit (evt) {
     const place = cardInput.value;
     const link = srcInput.value;
 
-    const createdCard = {
+    const card = {
         place,
         link,
     };   
 
-    closePopup();
-    const newCard = new Card(createdCard, '.card-template');
-    renderCard(newCard.generateCard());
+    closePopup(popupAddCard);
+    createCard(card);
 }
 
 popupEditProfile.addEventListener('submit', handleEditFormSubmit);
 popupAddCard.addEventListener('submit', handleAddFormSubmit);
 
+const createCard = (card) => {
+    const newCard = new Card(card, '.card-template');
+    renderCard(newCard.generateCard());
+};
 
-const EditFormValidator = new FormValidator(validationConfig, '.popup__edit-form');
+const editFormValidator = new FormValidator(validationConfig, '.popup__edit-form');
 
-const AddFormValidator = new FormValidator(validationConfig, '.popup__add-form');
+const addFormValidator = new FormValidator(validationConfig, '.popup__add-form');
 
-EditFormValidator.enableValidation();
+editFormValidator.enableValidation();
 
-AddFormValidator.enableValidation();
+addFormValidator.enableValidation();
 
 const cardGrid = document.querySelector('.elements');
 
@@ -181,6 +162,5 @@ const renderCard = (generatedCard) => {
 };
 
 initialCards.forEach((initalCard) => {
-    const newCard = new Card(initalCard, '.card-template');
-    renderCard(newCard.generateCard());
+    createCard(initalCard);
 });
