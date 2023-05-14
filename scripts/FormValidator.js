@@ -51,7 +51,7 @@ export class FormValidator {
         })
     }
 
-    _toggleSubmitButtonActivity() {
+    toggleSubmitButtonActivity() {
         if (!this._hasInvalidInput()) {
             this._enableSubmitButton();
         } else {
@@ -60,13 +60,13 @@ export class FormValidator {
     }
 
     _setListenters() {
-            this._toggleSubmitButtonActivity();
+            this.toggleSubmitButtonActivity();
     
             this._inputsList.forEach((input) => {
                 input.addEventListener('input', () => {
                     const errorElement = this._form.querySelector(`.${input.name}-error`);
                     this._setInputValidityState(input, errorElement);
-                    this._toggleSubmitButtonActivity();
+                    this.toggleSubmitButtonActivity();
                 });
             });
     }

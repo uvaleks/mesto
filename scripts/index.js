@@ -77,6 +77,7 @@ const refreshForm = (popup) => {
         cardInput.value = '';
         srcInput.value = '';
         addFormValidator.refreshValidityState();
+        addFormValidator.toggleSubmitButtonActivity();
     }
 };
 
