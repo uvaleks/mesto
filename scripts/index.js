@@ -87,38 +87,35 @@ const refreshAddForm = () => {
 };
 
 const closePopup = (popup) => {
-    popup.removeEventListener('click', checkClickForClosingCondition); 
     document.removeEventListener('keydown', checkKeydownForClosingCondition); 
     popup.classList.remove('popup_opened');
 };
 
 const openPopup = (popup) => {
-    if (popup.classList.contains('popup_type_edit')) {
-        refreshEditForm();
-    } else if (popup.classList.contains('popup_type_add')) {
-        refreshAddForm();
-    };
     popup.classList.add('popup_opened');
-    popup.addEventListener('click', checkClickForClosingCondition);
     document.addEventListener('keydown', checkKeydownForClosingCondition);
 };
 
 editButton.addEventListener('click', () => {
+    refreshEditForm();
     openPopup(popupEditProfile);
 }); 
 
-const closePopupButtonList = document.querySelectorAll('.popup__close-button');
-
-
-closePopupButtonList.forEach((closePopupButton) => {
-    closePopupButton.addEventListener('click', () => {
-        closePopup(findOpenPopup());
-    });
+addButton.addEventListener('click', () => {
+    refreshAddForm();
+    openPopup(popupAddCard);
 });
 
-addButton.addEventListener('click', () => {
-    openPopup(popupAddCard);
-}); 
+const closePopupButtonList = document.querySelectorAll('.popup__close-button');
+
+closePopupButtonList.forEach(button => {
+    const buttonsPopup = button.closest('.popup');
+    button.addEventListener('click', () => closePopup(buttonsPopup));
+});
+
+document.querySelectorAll('.popup').forEach(popup => {
+    popup.addEventListener('click', checkClickForClosingCondition);
+});
 
 const profileName = document.querySelector('#profile-name')
 const profileJob = document.querySelector('#profile-description')
@@ -144,14 +141,14 @@ function handleAddFormSubmit (evt) {
         link,
     };   
     closePopup(popupAddCard);
-    renderCard(createCard(card).generateCard());
+    renderCard(createCard(card));
 }
 
 popupEditProfile.addEventListener('submit', handleEditFormSubmit);
 popupAddCard.addEventListener('submit', handleAddFormSubmit);
 
 const createCard = (card) => {
-    return new Card(card, '.card-template');
+    return new Card(card, '.card-template').generateCard();
 };
 
 const editFormValidator = new FormValidator(validationConfig, '.popup__edit-form');
@@ -169,5 +166,5 @@ const renderCard = (generatedCard) => {
 };
 
 initialCards.forEach((initalCard) => {
-    renderCard(createCard(initalCard).generateCard());
+    renderCard(createCard(initalCard));
 });
