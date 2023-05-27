@@ -1,18 +1,9 @@
 import Section from '../components/Section.js';
+import Popup from '../components/Popup.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import { validationConfig, initialCards } from '../utils/constants.js';
-
-const popupPhotoWrapper = document.querySelector('.popup_type_photo');
-const popupPhoto = document.querySelector('.popup__photo');
-const popupPhotoTitle = document.querySelector('.popup__photo-title');
-
-export const openPhotoPopup = (src, title) => {
-    popupPhoto.src = src;
-    popupPhotoTitle.textContent = title;
-    popupPhoto.alt = title;
-    openPopup(popupPhotoWrapper);
-};
 
 const editButton = document.querySelector('.profile__edit-button');
 const popupEditProfile = document.querySelector('.popup_type_edit');
@@ -22,23 +13,6 @@ const popupAddCard = document.querySelector('.popup_type_add');
 
 const cardInput = popupAddCard.querySelector('input[name="input-place"]');
 const srcInput = popupAddCard.querySelector('input[name="input-link"]');
-
-const findOpenPopup = () => { 
-    const openedPopup = document.querySelector('.popup_opened'); 
-    return openedPopup; 
-}; 
-
-const checkClickForClosingCondition = (e) => {
-    if (e.target.classList.contains('popup')) {
-        closePopup(e.target);
-    };
-};
-
-const checkKeydownForClosingCondition = (e) => {
-    if (e.key === 'Escape') {
-        closePopup(findOpenPopup());
-    };
-};
 
 const refreshEditForm = () => {
     nameInput.value = profileName.textContent;
@@ -53,35 +27,14 @@ const refreshAddForm = () => {
     addFormValidator.toggleSubmitButtonActivity();
 };
 
-const closePopup = (popup) => {
-    document.removeEventListener('keydown', checkKeydownForClosingCondition); 
-    popup.classList.remove('popup_opened');
-};
-
-const openPopup = (popup) => {
-    popup.classList.add('popup_opened');
-    document.addEventListener('keydown', checkKeydownForClosingCondition);
-};
-
 editButton.addEventListener('click', () => {
     refreshEditForm();
-    openPopup(popupEditProfile);
+    EditPopup.open();
 }); 
 
 addButton.addEventListener('click', () => {
     refreshAddForm();
-    openPopup(popupAddCard);
-});
-
-const closePopupButtonList = document.querySelectorAll('.popup__close-button');
-
-closePopupButtonList.forEach(button => {
-    const buttonsPopup = button.closest('.popup');
-    button.addEventListener('click', () => closePopup(buttonsPopup));
-});
-
-document.querySelectorAll('.popup').forEach(popup => {
-    popup.addEventListener('click', checkClickForClosingCondition);
+    AddPopup.open();
 });
 
 const profileName = document.querySelector('#profile-name')
@@ -93,7 +46,7 @@ function handleEditFormSubmit (evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileJob.textContent = jobInput.value;
-    closePopup(popupEditProfile);
+    EditPopup.close();
 }
 
 function handleAddFormSubmit (evt) {
@@ -107,9 +60,15 @@ function handleAddFormSubmit (evt) {
         place,
         link,
     };   
-    closePopup(popupAddCard);
+    AddPopup.close();
     renderCard(createCard(card));
 }
+
+const cardGrid = document.querySelector('.elements');
+
+const renderCard = (generatedCard) => {
+    cardGrid.prepend(generatedCard);
+};
 
 popupEditProfile.addEventListener('submit', handleEditFormSubmit);
 popupAddCard.addEventListener('submit', handleAddFormSubmit);
@@ -129,3 +88,12 @@ const renderer = (initalCard) => {
 }
 
 new Section({items: initialCards, renderer}, '.elements').renderItems();
+
+const EditPopup = new Popup('.popup_type_edit');
+EditPopup.setEventListeners();
+
+const AddPopup = new Popup('.popup_type_add');
+AddPopup.setEventListeners();
+
+export const PhotoPopup = new PopupWithImage('.popup_type_photo');
+PhotoPopup.setEventListeners();

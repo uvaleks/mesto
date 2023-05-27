@@ -1,4 +1,5 @@
-import { openPhotoPopup } from '../pages/index.js';
+//import { openPhotoPopup } from '../pages/index.js';
+import { PhotoPopup } from '../pages/index.js';
 
 export default class Card {
     constructor (cardData, templateSelector) {
@@ -30,7 +31,7 @@ export default class Card {
             this._deleteCard();
         });
         this._cardImgElement.addEventListener('click', () => {
-            openPhotoPopup(this._cardImgElement.src, this._cardImgElement.alt)
+            PhotoPopup.open(this._cardTitle, this._cardImgSrc);
         });
     }
 
