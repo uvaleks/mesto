@@ -1,6 +1,8 @@
 import Section from '../components/Section.js';
 import Popup from '../components/Popup.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import { validationConfig, initialCards } from '../utils/constants.js';
@@ -14,11 +16,11 @@ const popupAddCard = document.querySelector('.popup_type_add');
 const cardInput = popupAddCard.querySelector('input[name="input-place"]');
 const srcInput = popupAddCard.querySelector('input[name="input-link"]');
 
-const refreshEditForm = () => {
-    nameInput.value = profileName.textContent;
-    jobInput.value = profileJob.textContent;
-    editFormValidator.refreshValidityState();
-};
+// const refreshEditForm = () => {
+//     nameInput.value = profileName.textContent;
+//     jobInput.value = profileJob.textContent;
+//     editFormValidator.refreshValidityState();
+// };
 
 const refreshAddForm = () => {
     cardInput.value = '';
@@ -28,31 +30,35 @@ const refreshAddForm = () => {
 };
 
 editButton.addEventListener('click', () => {
-    refreshEditForm();
-    EditPopup.open();
+    //refreshEditForm();
+    EditFormPopup.open();
 }); 
 
 addButton.addEventListener('click', () => {
-    refreshAddForm();
-    AddPopup.open();
+    //refreshAddForm();
+    AddFormPopup.open();
 });
 
 const profileName = document.querySelector('#profile-name')
-const profileJob = document.querySelector('#profile-description')
+const profileDescription = document.querySelector('#profile-description')
 const nameInput = popupEditProfile.querySelector('input[name="input-name"]');
-const jobInput = popupEditProfile.querySelector('input[name="input-description"]');
+const descriptionInput = popupEditProfile.querySelector('input[name="input-description"]');
 
-function handleEditFormSubmit (evt) {
-    evt.preventDefault();
-    profileName.textContent = nameInput.value;
-    profileJob.textContent = jobInput.value;
-    EditPopup.close();
+export function refreshUserInfo() {
+    const userInfo = MestoUserInfo.getUserInfo();
+    nameInput.value = userInfo.name;
+    descriptionInput.value = userInfo.info;
+}
+
+function handleEditFormSubmit ({ 'input-name': name, 'input-description': description }) {
+    //evt.preventDefault();
+    profileName.textContent = name;
+    profileDescription.textContent = description;
+    //EditFormPopup.close();
 }
 
 function handleAddFormSubmit (evt) {
-
-    evt.preventDefault();
-
+    //evt.preventDefault();
     const place = cardInput.value;
     const link = srcInput.value;
 
@@ -60,18 +66,39 @@ function handleAddFormSubmit (evt) {
         place,
         link,
     };   
-    AddPopup.close();
+    //AddFormPopup.close();
     renderCard(createCard(card));
 }
+
+// const EditPopup = new Popup('.popup_type_edit');
+// EditPopup.setEventListeners();
+
+// const AddPopup = new Popup('.popup_type_add');
+// AddPopup.setEventListeners();
+
+const EditFormPopup = new PopupWithForm({popupSelector: '.popup_type_edit', submitCallback: handleEditFormSubmit});
+EditFormPopup.setEventListeners();
+
+const AddFormPopup = new PopupWithForm({popupSelector: '.popup_type_add', submitCallback: handleAddFormSubmit});
+AddFormPopup.setEventListeners();
+
+// MestoUserInfo.refreshUserInfo();
+
+export const MestoUserInfo = new UserInfo({ nameSelector: '#profile-name', infoSelector: '#profile-description' });
+
+popupEditProfile.addEventListener('submit', (e) => {
+    e.preventDefault();
+    MestoUserInfo.setUserInfo({ name: nameInput.value, info:  descriptionInput.value });
+    EditFormPopup.close();
+});
+
+popupAddCard.addEventListener('submit', handleAddFormSubmit);
 
 const cardGrid = document.querySelector('.elements');
 
 const renderCard = (generatedCard) => {
     cardGrid.prepend(generatedCard);
 };
-
-popupEditProfile.addEventListener('submit', handleEditFormSubmit);
-popupAddCard.addEventListener('submit', handleAddFormSubmit);
 
 const editFormValidator = new FormValidator(validationConfig, '.popup__edit-form');
 const addFormValidator = new FormValidator(validationConfig, '.popup__add-form');
@@ -88,12 +115,6 @@ const renderer = (initalCard) => {
 }
 
 new Section({items: initialCards, renderer}, '.elements').renderItems();
-
-const EditPopup = new Popup('.popup_type_edit');
-EditPopup.setEventListeners();
-
-const AddPopup = new Popup('.popup_type_add');
-AddPopup.setEventListeners();
 
 export const PhotoPopup = new PopupWithImage('.popup_type_photo');
 PhotoPopup.setEventListeners();

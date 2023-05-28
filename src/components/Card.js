@@ -1,4 +1,3 @@
-//import { openPhotoPopup } from '../pages/index.js';
 import { PhotoPopup } from '../pages/index.js';
 
 export default class Card {
