@@ -1,4 +1,4 @@
-export class FormValidator {
+export default class FormValidator {
     constructor (settings, formSelector) {
         this._formSelector = formSelector;
         this._form = document.querySelector(this._formSelector);
