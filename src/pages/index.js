@@ -15,7 +15,7 @@ const popupAddCard = document.querySelector('.popup_type_add');
 const cardInput = popupAddCard.querySelector('input[name="input-place"]');
 const srcInput = popupAddCard.querySelector('input[name="input-link"]');
 
-function refreshUserInfo() {
+function refreshEditForm() {
     const userInfo = MestoUserInfo.getUserInfo();
     nameInput.value = userInfo.name;
     descriptionInput.value = userInfo.info;
@@ -23,9 +23,7 @@ function refreshUserInfo() {
 }
 
 editButton.addEventListener('click', () => {
-    refreshUserInfo();
     EditFormPopup.open();
-    refreshUserInfo();
 }); 
 
 const refreshAddForm = () => {
@@ -36,7 +34,6 @@ const refreshAddForm = () => {
 };
 
 addButton.addEventListener('click', () => {
-    refreshAddForm();
     AddFormPopup.open();
 });
 
@@ -56,24 +53,17 @@ function handleAddFormSubmit() {
     const card = {
         place,
         link,
-    };   
-    renderCard(createCard(card));
-    refreshAddForm();
+    };
+    MestoSection.addItem(renderer(card));
 }
 
-const EditFormPopup = new PopupWithForm({popupSelector: '.popup_type_edit', submitter: handleEditFormSubmit});
+const EditFormPopup = new PopupWithForm({popupSelector: '.popup_type_edit', submitter: handleEditFormSubmit, refresher: refreshEditForm});
 EditFormPopup.setEventListeners();
 
-const AddFormPopup = new PopupWithForm({popupSelector: '.popup_type_add', submitter: handleAddFormSubmit});
+const AddFormPopup = new PopupWithForm({popupSelector: '.popup_type_add', submitter: handleAddFormSubmit, refresher: refreshAddForm});
 AddFormPopup.setEventListeners();
 
-export const MestoUserInfo = new UserInfo({ nameSelector: '#profile-name', infoSelector: '#profile-description' });
-
-const cardGrid = document.querySelector('.elements');
-
-const renderCard = (generatedCard) => {
-    cardGrid.prepend(generatedCard);
-};
+const MestoUserInfo = new UserInfo({ nameSelector: '#profile-name', infoSelector: '#profile-description' });
 
 const EditFormValidator = new FormValidator(validationConfig, '.popup__edit-form');
 const AddFormValidator = new FormValidator(validationConfig, '.popup__add-form');
@@ -89,11 +79,12 @@ const createCard = (card) => {
     return new Card(card, '.card-template', opener).generateCard();
 };
 
-const renderer = (initalCard) => {
-    return createCard(initalCard);
+const renderer = (card) => {
+    return createCard(card);
 }
 
-new Section({items: initialCards, renderer}, '.elements').renderItems();
+const MestoSection = new Section({items: initialCards, renderer}, '.elements');
+MestoSection.renderItems();
 
 const PhotoPopup = new PopupWithImage('.popup_type_photo');
 PhotoPopup.setEventListeners();
