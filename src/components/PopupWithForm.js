@@ -1,12 +1,11 @@
 import Popup from './Popup.js';
-import { refreshUserInfo } from '../pages/index.js';
 
 export default class PopupWithForm extends Popup {
-    constructor({popupSelector, submitCallback}) {
+    constructor({popupSelector, submitter}) {
         super(popupSelector);
         this._form = this._popup.querySelector('.popup__edit-form');
         this._inputList = Array.from(this._form.querySelectorAll('.popup__input'));
-        this._submitCallback = submitCallback;
+        this._submitter = submitter;
     }
   
     _getInputValues() {
@@ -21,19 +20,14 @@ export default class PopupWithForm extends Popup {
         super.setEventListeners();
         this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
-            this._submitCallback(this._getInputValues());
+            this._submitter(this._getInputValues());
             this.close();
         });
     }
   
     close() {
         super.close();
-        //this._form.reset();
+        this._form.reset();
     }
-
-    open() {
-        refreshUserInfo();
-        super.open();
-      }
   }
   

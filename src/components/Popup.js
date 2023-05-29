@@ -1,6 +1,4 @@
 import { popupConfig } from '../utils/constants.js';
-import { MestoUserInfo } from '../pages/index.js';
-
 
 export default class Popup {
     constructor(popupSelector) {
