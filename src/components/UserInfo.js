@@ -1,5 +1,5 @@
 export default class UserInfo {
-    constructor({ nameSelector, infoSelector }, refresher) {
+    constructor({ nameSelector, infoSelector }) {
       this._name = document.querySelector(nameSelector);
       this._info = document.querySelector(infoSelector);
     }

@@ -17,76 +17,64 @@ const popupAddCard = document.querySelector('.popup_type_add');
 const cardInput = popupAddCard.querySelector('input[name="input-place"]');
 const srcInput = popupAddCard.querySelector('input[name="input-link"]');
 
-function refreshEditForm() {
-    const userInfo = MestoUserInfo.getUserInfo();
-    nameInput.value = userInfo.name;
-    descriptionInput.value = userInfo.info;
-    EditFormValidator.refreshValidityState();
-}
-
-editButton.addEventListener('click', () => {
-    EditFormPopup.open();
-}); 
-
-const refreshAddForm = () => {
-    cardInput.value = '';
-    srcInput.value = '';
-    AddFormValidator.refreshValidityState();
-    AddFormValidator.toggleSubmitButtonActivity();
-};
-
-addButton.addEventListener('click', () => {
-    AddFormPopup.open();
-});
-
-const profileName = document.querySelector('#profile-name')
-const profileDescription = document.querySelector('#profile-description')
 const nameInput = popupEditProfile.querySelector('input[name="input-name"]');
 const descriptionInput = popupEditProfile.querySelector('input[name="input-description"]');
 
+
+function refreshEditForm() {
+    const userInfo = mestoUserInfo.getUserInfo();
+    nameInput.value = userInfo.name;
+    descriptionInput.value = userInfo.info;
+    editFormValidator.refreshValidityState();
+}
+
+editButton.addEventListener('click', () => {
+    editFormPopup.open();
+}); 
+
+const refreshAddForm = () => {
+    addFormValidator.refreshValidityState();
+    addFormValidator.toggleSubmitButtonActivity();
+};
+
+addButton.addEventListener('click', () => {
+    addFormPopup.open();
+});
+
 function handleEditFormSubmit ({ 'input-name': name, 'input-description': description }) {
-    profileName.textContent = name;
-    profileDescription.textContent = description;
+    mestoUserInfo.setUserInfo({name, info: description});
 }
 
-function handleAddFormSubmit() {
-    const place = cardInput.value;
-    const link = srcInput.value;
-    const card = {
-        place,
-        link,
-    };
-    MestoSection.addItem(renderer(card));
+function handleAddFormSubmit({ 'input-place': place, 'input-link': link }) {
+    mestoSection.addItem(renderer({place, link}));
 }
 
-const EditFormPopup = new PopupWithForm({popupSelector: '.popup_type_edit', submitter: handleEditFormSubmit, refresher: refreshEditForm});
-EditFormPopup.setEventListeners();
+const editFormPopup = new PopupWithForm({popupSelector: '.popup_type_edit', submitter: handleEditFormSubmit, refresher: refreshEditForm});
+editFormPopup.setEventListeners();
 
-const AddFormPopup = new PopupWithForm({popupSelector: '.popup_type_add', submitter: handleAddFormSubmit, refresher: refreshAddForm});
-AddFormPopup.setEventListeners();
+const addFormPopup = new PopupWithForm({popupSelector: '.popup_type_add', submitter: handleAddFormSubmit, refresher: refreshAddForm});
+addFormPopup.setEventListeners();
 
-const MestoUserInfo = new UserInfo({ nameSelector: '#profile-name', infoSelector: '#profile-description' });
+const mestoUserInfo = new UserInfo({ nameSelector: '#profile-name', infoSelector: '#profile-description' });
 
-const EditFormValidator = new FormValidator(validationConfig, '.popup__edit-form');
-const AddFormValidator = new FormValidator(validationConfig, '.popup__add-form');
+const editFormValidator = new FormValidator(validationConfig, '.popup__edit-form');
+const addFormValidator = new FormValidator(validationConfig, '.popup__add-form');
 
-EditFormValidator.enableValidation();
-AddFormValidator.enableValidation();
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
 
 const opener = (cardTitle, cardImgSrc) => {
-    PhotoPopup.open(cardTitle, cardImgSrc);
+    photoPopup.open(cardTitle, cardImgSrc);
 }
 
 const createCard = (card) => {
     return new Card(card, '.card-template', opener).generateCard();
 };
 
-const renderer = (card) => {
-    return createCard(card);
-}
+const renderer = createCard
 
-const MestoSection = new Section({items: initialCards, renderer}, '.elements');
-MestoSection.renderItems();
+const mestoSection = new Section({items: initialCards, renderer}, '.elements');
+mestoSection.renderItems();
 
-const PhotoPopup = new PopupWithImage('.popup_type_photo');
-PhotoPopup.setEventListeners();
+const photoPopup = new PopupWithImage('.popup_type_photo');
+photoPopup.setEventListeners();

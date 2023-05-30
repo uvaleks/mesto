@@ -8,6 +8,16 @@ export default class PopupWithForm extends Popup {
         this._submitter = submitter;
         this._refresher = refresher;
     }
+
+    open() {
+        super.open();
+        this._refresher();
+    }
+
+    close() {
+        super.close();
+        this._form.reset();
+    }
   
     _getInputValues() {
         const values = {};
@@ -24,11 +34,6 @@ export default class PopupWithForm extends Popup {
             this._submitter(this._getInputValues());
             this.close();
         });
-    }
-    
-    close() {
-        super.close();
-        this._refresher();
     }
   }
   

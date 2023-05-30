@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    transition: all .5s ease;
+    transition: all .15s ease;
 }
 
 @media screen and (max-width: 615px) {
