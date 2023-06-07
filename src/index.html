@@ -13,7 +13,10 @@
     </header>
     <main class="content">
         <section class="profile">
+            <div class="profile__avatar-wrapper">
             <img class="profile__avatar" src="<%=require('./images/avatar.png')%>" alt="Аватар">
+            <div class="profile__avatar-edit-button"></div>
+            </div>
             <div class="profile__profile-info">
                 <div class="profile__name-wrapper">
                     <h1 class="profile__profile-name" id="profile-name">Жак-Ив Кусто</h1>
@@ -32,11 +35,11 @@
 
     <div class="popup popup_type_edit">
         <div class="popup__container">
-            <form class="popup__edit-form" name="edit-form" novalidate>
+            <form class="popup__form popup__edit-form" name="edit-form" novalidate>
                 <h2 class="popup__title">Редактировать профиль</h2>
-                <input class="popup__input popup__input_content_name" type="text" name="input-name" value="Жак-Ив Кусто" autocomplete="off" minlength="2" maxlength="40" required>
+                <input class="popup__input" type="text" name="input-name" value="Жак-Ив Кусто" autocomplete="off" minlength="2" maxlength="40" required>
                 <span class="input-name-error popup__input-error"></span>
-                <input class="popup__input popup__input_content_description" type="text" name="input-description" value="Исследователь океана" autocomplete="off" minlength="2" maxlength="200" required>
+                <input class="popup__input" type="text" name="input-description" value="Исследователь океана" autocomplete="off" minlength="2" maxlength="200" required>
                 <span class="input-description-error popup__input-error"></span>
                 <button class="popup__submit-button" type="submit">Сохранить</button>
             </form>
@@ -46,11 +49,11 @@
 
     <div class="popup popup_type_add">
         <div class="popup__container">
-            <form class="popup__edit-form popup__add-form" name="add-form" novalidate>
+            <form class="popup__form popup__add-form" name="add-form" novalidate>
                 <h2 class="popup__title">Новое место</h2>
-                <input class="popup__input popup__input_content_name" type="text" name="input-place" placeholder="Название" autocomplete="off" minlength="2" maxlength="30" required>
+                <input class="popup__input" type="text" name="input-place" placeholder="Название" autocomplete="off" minlength="2" maxlength="30" required>
                 <span class="input-place-error popup__input-error"></span>
-                <input class="popup__input popup__input_content_description" type="url" name="input-link" placeholder="Ссылка на картинку" autocomplete="off" required>
+                <input class="popup__input" type="url" name="input-link" placeholder="Ссылка на картинку" autocomplete="off" required>
                 <span class="input-link-error popup__input-error"></span>
                 <button class="popup__submit-button" type="submit">Создать</button>
             </form>
@@ -62,6 +65,28 @@
         <div class="popup__photo-wrapper">
             <img class="popup__photo" src="//:0">
             <h2 class="popup__photo-title"></h2>
+            <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+        </div>
+    </div>
+
+    <div class="popup popup_type_edit-avatar">
+        <div class="popup__container">
+            <form class="popup__form popup__edit-avatar" name="edit-avatar-form" novalidate>
+                <h2 class="popup__title">Обновить аватар</h2>
+                <input class="popup__input" type="url" name="input-avatar-link" placeholder="Ссылка на картинку" autocomplete="off" required>
+                <span class="input-link-error popup__input-error"></span>
+                <button class="popup__submit-button" type="submit">Сохранить</button>
+            </form>
+            <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
+        </div>
+    </div>
+
+    <div class="popup popup_type_confirm-delete">
+        <div class="popup__container">
+            <form class="popup__form popup__confirm-delete" name="confirm-delete" novalidate>
+                <h2 class="popup__title">Вы уверены?</h2>
+                <button class="popup__submit-button" type="submit">Да</button>
+            </form>
             <button class="popup__close-button" type="button" aria-label="Закрыть"></button>
         </div>
     </div>
