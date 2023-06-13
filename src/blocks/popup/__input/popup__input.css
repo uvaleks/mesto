@@ -10,3 +10,7 @@
     box-sizing: border-box;
     transition: border-bottom .5s ease;
 }
+
+.popup__input:first-of-type {
+    padding-top: 24px;
+}
