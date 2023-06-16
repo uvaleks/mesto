@@ -8,7 +8,9 @@ export default class Card {
         this._cardTitle = cardData.name;
         this._cardImgElement = this._templateContent.querySelector('.card__photo');
         this._cardImgSrc = cardData.link;
+        this._cardLikesNum = cardData.likes.length;
         this._likeButton = this._templateContent.querySelector('.card__like-button');
+        this._likesCounter = this._templateContent.querySelector('.card__like-counter');
         this._deleteButton = this._templateContent.querySelector('.card__delete-button');
     }
 
@@ -19,6 +21,14 @@ export default class Card {
 
     _likeCard() {
         this._likeButton.classList.toggle('card__like-button_active');
+        this.updateLikes();
+    }
+
+    updateLikes() {
+        this._cardLikesNum !=  0
+        ? this._likesCounter.textContent = this._cardLikesNum
+        : this._likesCounter.textContent = '';
+        
     }
 
     _setCardListenters() {
