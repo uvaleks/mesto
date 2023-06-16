@@ -5,7 +5,7 @@ export default class Card {
         this._cardTemplate = document.querySelector(this._templateSelector);
         this._templateContent = this._cardTemplate.content.querySelector('.card').cloneNode(true);
         this._cardTitleElement = this._templateContent.querySelector('.card__title');
-        this._cardTitle = cardData.place;
+        this._cardTitle = cardData.name;
         this._cardImgElement = this._templateContent.querySelector('.card__photo');
         this._cardImgSrc = cardData.link;
         this._likeButton = this._templateContent.querySelector('.card__like-button');

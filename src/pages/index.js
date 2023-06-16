@@ -42,10 +42,30 @@ const loadUserInfo = () => {
 
 loadUserInfo();
 
+const createCard = (card) => {
+    return new Card(card, '.card-template', opener).generateCard();
+};
+
+const renderer = createCard;
+
+const mestoSection = new Section({items: initialCards, renderer}, '.elements');
+
+const renderInitialCards = () => {
+    api.getInitialCards()
+    .then((info) => {
+        mestoSection.renderItems(info);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+}
+
+renderInitialCards();
+
 const postUserInfo = ({name, info}) => {
     api.patchUserInfo({name, info})
     .then((info) => {
-        console.log(info);
+
     })
     .catch((err) => {
         console.error(err);
@@ -82,8 +102,9 @@ function handleEditFormSubmit ({ 'input-name': name, 'input-description': descri
     postUserInfo({name, info: description});
 }
 
-function handleAddFormSubmit({ 'input-place': place, 'input-link': link }) {
-    mestoSection.addItem(renderer({place, link}));
+function handleAddFormSubmit({ 'input-place': name, 'input-link': link }) {
+    api.postCard({name, link});
+    //mestoSection.addItem(renderer({place, link}));
 }
 
 const editFormPopup = new PopupWithForm({popupSelector: '.popup_type_edit', submitter: handleEditFormSubmit, refresher: refreshEditForm});
@@ -101,15 +122,6 @@ addFormValidator.enableValidation();
 const opener = (cardTitle, cardImgSrc) => {
     photoPopup.open(cardTitle, cardImgSrc);
 }
-
-const createCard = (card) => {
-    return new Card(card, '.card-template', opener).generateCard();
-};
-
-const renderer = createCard
-
-const mestoSection = new Section({items: initialCards, renderer}, '.elements');
-mestoSection.renderItems();
 
 const photoPopup = new PopupWithImage('.popup_type_photo');
 photoPopup.setEventListeners();

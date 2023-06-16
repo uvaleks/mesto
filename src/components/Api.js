@@ -5,7 +5,39 @@ export default class Api {
     }
   
     getInitialCards() {
+        return fetch(`${this._baseUrl}/cards`, {headers: this._headers})
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            })
+            .then((result) => {
+                return result;
+            }); 
+    }
 
+    postCard({name, link}) {
+        return fetch(`${this._baseUrl}/cards`, {
+            method: 'POST',
+            headers: {
+                authorization: this._headers.authorization,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                link: link
+            })
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            })
+            .then((result) => {
+                return result;
+            }); 
     }
 
     getUserInfo() {
@@ -40,7 +72,6 @@ export default class Api {
                 return Promise.reject(`Ошибка: ${res.status}`);
             })
             .then((result) => {
-                console.log(result);
                 return result;
             }); 
     }
