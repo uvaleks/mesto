@@ -1,5 +1,6 @@
 export default class Card {
-    constructor (cardData, templateSelector, opener) {
+    constructor (cardData, templateSelector, opener, delConfirmOpener) {
+        this._delConfirmOpener = delConfirmOpener;
         this._opener = opener;
         this._templateSelector = templateSelector;
         this._cardTemplate = document.querySelector(this._templateSelector);
@@ -12,11 +13,12 @@ export default class Card {
         this._likeButton = this._templateContent.querySelector('.card__like-button');
         this._likesCounter = this._templateContent.querySelector('.card__like-counter');
         this._deleteButton = this._templateContent.querySelector('.card__delete-button');
+        this.id = cardData._id;
     }
 
-    _deleteCard() {
+    deleteCard() {
         this._templateContent.remove();
-        this._templateContent = null;
+        this._templateContent = null
     }
 
     _likeCard() {
@@ -28,17 +30,22 @@ export default class Card {
         this._cardLikesNum !=  0
         ? this._likesCounter.textContent = this._cardLikesNum
         : this._likesCounter.textContent = '';
-        
     }
 
     _setCardListenters() {
         this._likeButton.addEventListener('click', () => {
             this._likeCard();
         })
-        this._deleteButton.addEventListener('click', () => {
-            this._deleteCard();
-        });
+
+        if (this._deleteButton) {
+            console.log('Delete button listener added on card with ID:' + this._templateContent.getAttribute("id"));
+            this._deleteButton.addEventListener('click', () => {
+                this._delConfirmOpener(this._templateContent);
+            })
+        }
+
         this._cardImgElement.addEventListener('click', () => {
+            console.log('Click on card with ID:' + this._templateContent.getAttribute("id"));
             this._opener(this._cardTitle, this._cardImgSrc);
         });
     }
@@ -47,10 +54,10 @@ export default class Card {
         this._cardTitleElement.textContent = this._cardTitle;
         this._cardImgElement.src = this._cardImgSrc;
         this._cardImgElement.alt = this._cardTitle;
-
+        this._templateContent.id = this.id;
+        console.log('Generate card with ID:' + this.id)
         this._setCardListenters();
-
-        return this._templateContent;
+        return this._templateContent;     
     }
 }
 

@@ -8,6 +8,7 @@ import UserInfo from '../components/UserInfo.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import { validationConfig, initialCards } from '../utils/constants.js';
+import PopupDeleteConfirm from '../components/PopupDeleteConfirm';
 
 const editButton = document.querySelector('.profile__edit-button');
 const popupEditProfile = document.querySelector('.popup_type_edit');
@@ -30,10 +31,13 @@ const api = new Api({
 
 const mestoUserInfo = new UserInfo({ nameSelector: '#profile-name', infoSelector: '#profile-description' });
 
+export let userId = '';
+
 const loadUserInfo = () => {
     api.getUserInfo()
     .then((info) => {
         mestoUserInfo.setUserInfo({name: info.name, info: info.about})
+        userId = info._id
     })
     .catch((err) => {
         console.error(err);
@@ -42,13 +46,25 @@ const loadUserInfo = () => {
 
 loadUserInfo();
 
+
+const opener = (cardTitle, cardImgSrc) => {
+    photoPopup.open(cardTitle, cardImgSrc);
+}
+
+const delConfirmOpener = (card) => {
+    console.log(card.getAttribute("id"));
+    deleteCardPopup.open(card);
+}
+
 const createCard = (card) => {
-    return new Card(card, '.card-template', opener).generateCard();
+    return new Card(card, '.card-template', opener, delConfirmOpener).generateCard()
 };
 
-const renderer = createCard;
+const createOwnCard = (card) => {
+    return new Card(card, '.own-card-template', opener, delConfirmOpener).generateCard()
+};
 
-const mestoSection = new Section({items: initialCards, renderer}, '.elements');
+const mestoSection = new Section({items: initialCards, renderer: createCard, rendererForOwn: createOwnCard}, '.elements');
 
 const renderInitialCards = () => {
     api.getInitialCards()
@@ -62,11 +78,19 @@ const renderInitialCards = () => {
 
 renderInitialCards();
 
+const renderPostedCard = ({name, link}) => {
+    api.postCard({name, link})
+    .then(() => {
+        cardsContainer.innerHTML = '';
+        renderInitialCards();
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+}
+
 const postUserInfo = ({name, info}) => {
     api.patchUserInfo({name, info})
-    .then((info) => {
-
-    })
     .catch((err) => {
         console.error(err);
     });
@@ -98,13 +122,25 @@ addButton.addEventListener('click', () => {
 });
 
 function handleEditFormSubmit ({ 'input-name': name, 'input-description': description }) {
-    mestoUserInfo.setUserInfo({name, info: description});
     postUserInfo({name, info: description});
+    mestoUserInfo.setUserInfo({name, info: description});
 }
 
 function handleAddFormSubmit({ 'input-place': name, 'input-link': link }) {
-    api.postCard({name, link});
-    //mestoSection.addItem(renderer({place, link}));
+    renderPostedCard({name, link});
+}
+
+const cardsContainer = document.querySelector('.elements');
+
+function handleDeleteCardFormSubmit(card) {
+    api.deleteCard(card.getAttribute("id"))
+    .then(() => {
+        cardsContainer.innerHTML = '';
+        renderInitialCards();
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 }
 
 const editFormPopup = new PopupWithForm({popupSelector: '.popup_type_edit', submitter: handleEditFormSubmit, refresher: refreshEditForm});
@@ -113,15 +149,14 @@ editFormPopup.setEventListeners();
 const addFormPopup = new PopupWithForm({popupSelector: '.popup_type_add', submitter: handleAddFormSubmit, refresher: refreshAddForm});
 addFormPopup.setEventListeners();
 
+const deleteCardPopup = new PopupDeleteConfirm({popupSelector: '.popup_type_confirm-delete', submitter: handleDeleteCardFormSubmit});
+deleteCardPopup.setEventListeners();
+
 const editFormValidator = new FormValidator(validationConfig, '.popup__edit-form');
 const addFormValidator = new FormValidator(validationConfig, '.popup__add-form');
 
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
-
-const opener = (cardTitle, cardImgSrc) => {
-    photoPopup.open(cardTitle, cardImgSrc);
-}
 
 const photoPopup = new PopupWithImage('.popup_type_photo');
 photoPopup.setEventListeners();

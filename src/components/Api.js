@@ -40,6 +40,27 @@ export default class Api {
             }); 
     }
 
+    deleteCard(id) {
+        console.log('Trying to delete card with ID:' + id)
+        return fetch(`${this._baseUrl}/cards/${id}`, {
+            method: 'DELETE',
+            headers: {
+                authorization: this._headers.authorization,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => {
+                if (res.ok) {
+                    console.log('DELETED')
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            })
+            .then((result) => {
+                return result;
+            }); 
+    }
+
     getUserInfo() {
         return fetch(`${this._baseUrl}/users/me`, {headers: this._headers})
             .then(res => {
