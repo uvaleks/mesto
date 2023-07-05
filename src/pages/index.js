@@ -14,7 +14,7 @@ const editButton = document.querySelector('.profile__edit-button');
 const popupEditProfile = document.querySelector('.popup_type_edit');
 
 const addButton = document.querySelector('.profile__add-button');
-const popupAddCard = document.querySelector('.popup_type_add');
+//const popupAddCard = document.querySelector('.popup_type_add');
 
 // const cardInput = popupAddCard.querySelector('input[name="input-place"]');
 // const srcInput = popupAddCard.querySelector('input[name="input-link"]');
@@ -46,22 +46,45 @@ const loadUserInfo = () => {
 
 loadUserInfo();
 
-
 const opener = (cardTitle, cardImgSrc) => {
     photoPopup.open(cardTitle, cardImgSrc);
 }
 
 const delConfirmOpener = (card) => {
-    console.log(card.getAttribute("id"));
     deleteCardPopup.open(card);
 }
 
+const likeRemover = (id) => {
+    return api.deleteLike(id)
+    .then((info) => {
+        console.log(info.likes.length);
+        let likes = info.likes.length;
+        return likes;
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+};
+
+const likePutter = (id) => {
+    return api.putLike(id)
+    .then((info) => {
+        console.log(info.likes.length);
+        let likes = info.likes.length;
+        return likes;
+    })
+    .catch((err) => {
+        console.error(err);
+    })
+}
+
+
 const createCard = (card) => {
-    return new Card(card, '.card-template', opener, delConfirmOpener).generateCard()
+    return new Card(card, '.card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
 };
 
 const createOwnCard = (card) => {
-    return new Card(card, '.own-card-template', opener, delConfirmOpener).generateCard()
+    return new Card(card, '.own-card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
 };
 
 const mestoSection = new Section({items: initialCards, renderer: createCard, rendererForOwn: createOwnCard}, '.elements');

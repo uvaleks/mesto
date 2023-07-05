@@ -40,6 +40,65 @@ export default class Api {
             }); 
     }
 
+    // getLikes(id) {
+    //     return fetch(`${this._baseUrl}/cards/${id}`, {
+    //         method: 'GET',
+    //         headers: {
+    //             authorization: this._headers.authorization,
+    //             'Content-Type': 'application/json'
+    //         }
+    //     })
+    //         .then(res => {
+    //             if (res.ok) {
+    //                 return res.json();
+    //             }
+    //             return Promise.reject(`Ошибка: ${res.status}`);
+    //         })
+    //         .then((result) => {
+    //             return result;
+    //         }); 
+    // }
+
+    putLike(id) {
+        return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+            method: 'PUT',
+            headers: {
+                authorization: this._headers.authorization,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => {
+                if (res.ok) {
+                    console.log('LIKE on card with ID' + id + ' PUTED')
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            })
+            .then((result) => {
+                return result;
+            }); 
+    }
+
+    deleteLike(id) {
+        return fetch(`${this._baseUrl}/cards/${id}/likes`, {
+            method: 'DELETE',
+            headers: {
+                authorization: this._headers.authorization,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => {
+                if (res.ok) {
+                    console.log('LIKE on card with ID' + id + ' DELETED')
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            })
+            .then((result) => {
+                return result;
+            }); 
+    }
+
     deleteCard(id) {
         console.log('Trying to delete card with ID:' + id)
         return fetch(`${this._baseUrl}/cards/${id}`, {
