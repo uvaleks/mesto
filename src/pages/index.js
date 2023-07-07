@@ -12,15 +12,12 @@ import PopupDeleteConfirm from '../components/PopupDeleteConfirm';
 
 const editButton = document.querySelector('.profile__edit-button');
 const popupEditProfile = document.querySelector('.popup_type_edit');
-
-const addButton = document.querySelector('.profile__add-button');
-//const popupAddCard = document.querySelector('.popup_type_add');
-
-// const cardInput = popupAddCard.querySelector('input[name="input-place"]');
-// const srcInput = popupAddCard.querySelector('input[name="input-link"]');
-
 const nameInput = popupEditProfile.querySelector('input[name="input-name"]');
 const descriptionInput = popupEditProfile.querySelector('input[name="input-description"]');
+
+const addButton = document.querySelector('.profile__add-button');
+
+const editAvatarButton = document.querySelector('.profile__avatar-edit-button');
 
 const api = new Api({
     baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-68',
@@ -29,14 +26,14 @@ const api = new Api({
     }
   });
 
-const mestoUserInfo = new UserInfo({ nameSelector: '#profile-name', infoSelector: '#profile-description' });
+const mestoUserInfo = new UserInfo({ nameSelector: '#profile-name', infoSelector: '#profile-description', avatarSelector: '.profile__avatar' });
 
 export let userId = '';
 
 const loadUserInfo = () => {
     api.getUserInfo()
     .then((info) => {
-        mestoUserInfo.setUserInfo({name: info.name, info: info.about})
+        mestoUserInfo.setUserInfo({name: info.name, info: info.about, avatar: info.avatar})
         userId = info._id
     })
     .catch((err) => {
@@ -78,7 +75,6 @@ const likePutter = (id) => {
     })
 }
 
-
 const createCard = (card) => {
     return new Card(card, '.card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
 };
@@ -119,6 +115,10 @@ const postUserInfo = ({name, info}) => {
     });
 }
 
+editAvatarButton.addEventListener('click', () => {
+    editAvatarFormPopup.open();
+}); 
+
 function refreshEditForm() {
     api.getUserInfo()
     .then((info) => {
@@ -144,6 +144,24 @@ addButton.addEventListener('click', () => {
     addFormPopup.open();
 });
 
+const avatarImg = document.querySelector('.profile__avatar');
+
+function handleAvatarFormSubmit (avatar) {
+    api.patchAvatar(avatar["input-avatar-link"])
+    .then(res => {
+        avatarImg.src = res["avatar"];
+        console.log(res);
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+}
+
+const refreshAvatarForm = () => {
+    avatarFormValidator.refreshValidityState();
+    avatarFormValidator.toggleSubmitButtonActivity();
+};
+
 function handleEditFormSubmit ({ 'input-name': name, 'input-description': description }) {
     postUserInfo({name, info: description});
     mestoUserInfo.setUserInfo({name, info: description});
@@ -166,6 +184,9 @@ function handleDeleteCardFormSubmit(card) {
     });
 }
 
+const editAvatarFormPopup = new PopupWithForm({popupSelector: '.popup_type_edit-avatar', submitter: handleAvatarFormSubmit, refresher: refreshAvatarForm});
+editAvatarFormPopup.setEventListeners();
+
 const editFormPopup = new PopupWithForm({popupSelector: '.popup_type_edit', submitter: handleEditFormSubmit, refresher: refreshEditForm});
 editFormPopup.setEventListeners();
 
@@ -175,9 +196,11 @@ addFormPopup.setEventListeners();
 const deleteCardPopup = new PopupDeleteConfirm({popupSelector: '.popup_type_confirm-delete', submitter: handleDeleteCardFormSubmit});
 deleteCardPopup.setEventListeners();
 
+const avatarFormValidator = new FormValidator(validationConfig, '.popup__edit-avatar');
 const editFormValidator = new FormValidator(validationConfig, '.popup__edit-form');
 const addFormValidator = new FormValidator(validationConfig, '.popup__add-form');
 
+avatarFormValidator.enableValidation();
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 

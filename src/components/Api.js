@@ -40,24 +40,29 @@ export default class Api {
             }); 
     }
 
-    // getLikes(id) {
-    //     return fetch(`${this._baseUrl}/cards/${id}`, {
-    //         method: 'GET',
-    //         headers: {
-    //             authorization: this._headers.authorization,
-    //             'Content-Type': 'application/json'
-    //         }
-    //     })
-    //         .then(res => {
-    //             if (res.ok) {
-    //                 return res.json();
-    //             }
-    //             return Promise.reject(`Ошибка: ${res.status}`);
-    //         })
-    //         .then((result) => {
-    //             return result;
-    //         }); 
-    // }
+    patchAvatar(link) {
+        //console.log('LINK: ' + link.input-avatar-link);
+        return fetch(`${this._baseUrl}/users/me/avatar`, {
+            method: 'PATCH',
+            headers: {
+                authorization: this._headers.authorization,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                avatar: link
+            })
+        })
+            .then(res => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            })
+            .then((result) => {
+                return result;
+            }); 
+    }
+
 
     putLike(id) {
         return fetch(`${this._baseUrl}/cards/${id}/likes`, {
@@ -155,16 +160,4 @@ export default class Api {
                 return result;
             }); 
     }
-
-//     fetch('https://mesto.nomoreparties.co/v1/cohortId/users/me', {
-//   method: 'PATCH',
-//   headers: {
-//     authorization: 'c56e30dc-2883-4270-a59e-b2f7bae969c6',
-//     'Content-Type': 'application/json'
-//   },
-//   body: JSON.stringify({
-//     name: 'Marie Skłodowska Curie',
-//     about: 'Physicist and Chemist'
-//   })
-// });
 }
