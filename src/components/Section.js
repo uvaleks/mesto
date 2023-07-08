@@ -9,15 +9,11 @@ export default class Section {
     }
     
     renderItems(items) {
-        let counter = 0;
         items.forEach(item => {
             let card;
-            counter += 1;
             if (item.owner._id === userId) {  
-                console.log(counter);
                 card = this._rendererForOwn(item)
             } else {
-                console.log(counter);
                 card = this._renderer(item)
             }
             this._addItem(card);

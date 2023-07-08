@@ -8,7 +8,6 @@ export default class PopupDeleteConfirm extends Popup {
     }
 
     open(card) {           
-        console.log('Open delete confirm popup for card with ID' + card.getAttribute("id"));
         this._card = card;
         super.open()
     }

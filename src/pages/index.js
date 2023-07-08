@@ -54,7 +54,6 @@ const delConfirmOpener = (card) => {
 const likeRemover = (id) => {
     return api.deleteLike(id)
     .then((info) => {
-        console.log(info.likes.length);
         let likes = info.likes.length;
         return likes;
     })
@@ -66,7 +65,6 @@ const likeRemover = (id) => {
 const likePutter = (id) => {
     return api.putLike(id)
     .then((info) => {
-        console.log(info.likes.length);
         let likes = info.likes.length;
         return likes;
     })
@@ -97,19 +95,11 @@ const renderInitialCards = () => {
 
 renderInitialCards();
 
-const renderPostedCard = ({name, link}) => {
-    api.postCard({name, link})
-    .then(() => {
-        cardsContainer.innerHTML = '';
-        renderInitialCards();
-    })
-    .catch((err) => {
-        console.error(err);
-    });
-}
-
 const postUserInfo = ({name, info}) => {
     api.patchUserInfo({name, info})
+    .then(() => {
+        submitButtonTextRefresher();
+    })
     .catch((err) => {
         console.error(err);
     });
@@ -145,16 +135,26 @@ addButton.addEventListener('click', () => {
 });
 
 const avatarImg = document.querySelector('.profile__avatar');
+const avatarSubmitButton = document.querySelector('.popup__edit-avatar-form').querySelector(validationConfig["submitButtonSelector"]);
+const editProfileSubmitButton = document.querySelector('.popup__edit-form').querySelector(validationConfig["submitButtonSelector"]);
+const createCardSubmitButton = document.querySelector('.popup__add-form').querySelector(validationConfig["submitButtonSelector"]);
+
+function submitButtonTextRefresher() {
+    avatarSubmitButton.textContent = 'Сохранить';
+    editProfileSubmitButton.textContent = 'Сохранить';
+    createCardSubmitButton.textContent = 'Создать';
+}
 
 function handleAvatarFormSubmit (avatar) {
+    avatarSubmitButton.textContent = 'Сохранение...';
     api.patchAvatar(avatar["input-avatar-link"])
     .then(res => {
         avatarImg.src = res["avatar"];
-        console.log(res);
+        submitButtonTextRefresher();     
     })
     .catch((err) => {
         console.error(err);
-    });
+    })
 }
 
 const refreshAvatarForm = () => {
@@ -162,13 +162,24 @@ const refreshAvatarForm = () => {
     avatarFormValidator.toggleSubmitButtonActivity();
 };
 
-function handleEditFormSubmit ({ 'input-name': name, 'input-description': description }) {
-    postUserInfo({name, info: description});
-    mestoUserInfo.setUserInfo({name, info: description});
+
+const renderPostedCard = ({ 'input-place': name, 'input-link': link }) => {
+    createCardSubmitButton.textContent = 'Сохранение...';
+    api.postCard({name, link})
+    .then(() => {
+        submitButtonTextRefresher();
+        cardsContainer.innerHTML = '';
+        renderInitialCards();
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 }
 
-function handleAddFormSubmit({ 'input-place': name, 'input-link': link }) {
-    renderPostedCard({name, link});
+function handleEditFormSubmit ({ 'input-name': name, 'input-description': description }) {
+    editProfileSubmitButton.textContent = 'Сохранение...';
+    postUserInfo({name, info: description});
+    mestoUserInfo.setUserInfo({name, info: description});
 }
 
 const cardsContainer = document.querySelector('.elements');
@@ -190,13 +201,13 @@ editAvatarFormPopup.setEventListeners();
 const editFormPopup = new PopupWithForm({popupSelector: '.popup_type_edit', submitter: handleEditFormSubmit, refresher: refreshEditForm});
 editFormPopup.setEventListeners();
 
-const addFormPopup = new PopupWithForm({popupSelector: '.popup_type_add', submitter: handleAddFormSubmit, refresher: refreshAddForm});
+const addFormPopup = new PopupWithForm({popupSelector: '.popup_type_add', submitter: renderPostedCard, refresher: refreshAddForm});
 addFormPopup.setEventListeners();
 
 const deleteCardPopup = new PopupDeleteConfirm({popupSelector: '.popup_type_confirm-delete', submitter: handleDeleteCardFormSubmit});
 deleteCardPopup.setEventListeners();
 
-const avatarFormValidator = new FormValidator(validationConfig, '.popup__edit-avatar');
+const avatarFormValidator = new FormValidator(validationConfig, '.popup__edit-avatar-form');
 const editFormValidator = new FormValidator(validationConfig, '.popup__edit-form');
 const addFormValidator = new FormValidator(validationConfig, '.popup__add-form');
 

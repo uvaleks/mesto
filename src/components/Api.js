@@ -41,7 +41,6 @@ export default class Api {
     }
 
     patchAvatar(link) {
-        //console.log('LINK: ' + link.input-avatar-link);
         return fetch(`${this._baseUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: {
@@ -74,7 +73,6 @@ export default class Api {
         })
             .then(res => {
                 if (res.ok) {
-                    console.log('LIKE on card with ID' + id + ' PUTED')
                     return res.json();
                 }
                 return Promise.reject(`Ошибка: ${res.status}`);
@@ -94,7 +92,6 @@ export default class Api {
         })
             .then(res => {
                 if (res.ok) {
-                    console.log('LIKE on card with ID' + id + ' DELETED')
                     return res.json();
                 }
                 return Promise.reject(`Ошибка: ${res.status}`);
@@ -105,7 +102,6 @@ export default class Api {
     }
 
     deleteCard(id) {
-        console.log('Trying to delete card with ID:' + id)
         return fetch(`${this._baseUrl}/cards/${id}`, {
             method: 'DELETE',
             headers: {
@@ -115,7 +111,6 @@ export default class Api {
         })
             .then(res => {
                 if (res.ok) {
-                    console.log('DELETED')
                     return res.json();
                 }
                 return Promise.reject(`Ошибка: ${res.status}`);
