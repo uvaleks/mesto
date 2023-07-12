@@ -54,8 +54,7 @@ const delConfirmOpener = (card) => {
 const likeRemover = (id) => {
     return api.deleteLike(id)
     .then((info) => {
-        let likes = info.likes.length;
-        return likes;
+        return info;
     })
     .catch((err) => {
         console.error(err);
@@ -65,8 +64,7 @@ const likeRemover = (id) => {
 const likePutter = (id) => {
     return api.putLike(id)
     .then((info) => {
-        let likes = info.likes.length;
-        return likes;
+        return info;
     })
     .catch((err) => {
         console.error(err);
@@ -74,11 +72,11 @@ const likePutter = (id) => {
 }
 
 const createCard = (card) => {
-    return new Card(card, '.card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
+    return new Card(userId, card, '.card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
 };
 
 const createOwnCard = (card) => {
-    return new Card(card, '.own-card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
+    return new Card(userId, card, '.own-card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
 };
 
 const mestoSection = new Section({items: initialCards, renderer: createCard, rendererForOwn: createOwnCard}, '.elements');
@@ -96,13 +94,13 @@ const renderInitialCards = () => {
 renderInitialCards();
 
 const postUserInfo = ({name, info}) => {
-    api.patchUserInfo({name, info})
-    .then(() => {
-        submitButtonTextRefresher();
+    return api.patchUserInfo({name, info})
+    .then((res) => {
+        return res;
     })
     .catch((err) => {
         console.error(err);
-    });
+    })
 }
 
 editAvatarButton.addEventListener('click', () => {
@@ -134,26 +132,22 @@ addButton.addEventListener('click', () => {
     addFormPopup.open();
 });
 
-const avatarImg = document.querySelector('.profile__avatar');
 const avatarSubmitButton = document.querySelector('.popup__edit-avatar-form').querySelector(validationConfig["submitButtonSelector"]);
 const editProfileSubmitButton = document.querySelector('.popup__edit-form').querySelector(validationConfig["submitButtonSelector"]);
 const createCardSubmitButton = document.querySelector('.popup__add-form').querySelector(validationConfig["submitButtonSelector"]);
-
-function submitButtonTextRefresher() {
-    avatarSubmitButton.textContent = 'Сохранить';
-    editProfileSubmitButton.textContent = 'Сохранить';
-    createCardSubmitButton.textContent = 'Создать';
-}
 
 function handleAvatarFormSubmit (avatar) {
     avatarSubmitButton.textContent = 'Сохранение...';
     api.patchAvatar(avatar["input-avatar-link"])
     .then(res => {
-        avatarImg.src = res["avatar"];
-        submitButtonTextRefresher();     
+        mestoUserInfo.setUserInfo({name: res["name"], info: res["about"], avatar: res["avatar"]});
+        editAvatarFormPopup.close()
     })
     .catch((err) => {
         console.error(err);
+    })
+    .finally(() => {
+        avatarSubmitButton.textContent = 'Сохранить'
     })
 }
 
@@ -166,29 +160,41 @@ const refreshAvatarForm = () => {
 const renderPostedCard = ({ 'input-place': name, 'input-link': link }) => {
     createCardSubmitButton.textContent = 'Сохранение...';
     api.postCard({name, link})
-    .then(() => {
-        submitButtonTextRefresher();
-        cardsContainer.innerHTML = '';
-        renderInitialCards();
+    .then((res) => {
+        mestoSection.renderItem(res);
+        addFormPopup.close();
     })
     .catch((err) => {
         console.error(err);
-    });
+    })
+    .finally(() => {
+        createCardSubmitButton.textContent = 'Создать'
+    })
 }
 
-function handleEditFormSubmit ({ 'input-name': name, 'input-description': description }) {
+const handleEditFormSubmit = ({ 'input-name': name, 'input-description': description }) => {
     editProfileSubmitButton.textContent = 'Сохранение...';
-    postUserInfo({name, info: description});
-    mestoUserInfo.setUserInfo({name, info: description});
+    postUserInfo({name, info: description})
+    .then(res => {
+        mestoUserInfo.setUserInfo({name: res["name"], info: res["about"], avatar: res["avatar"]})
+        editFormPopup.close();
+    })
+    .catch((err) => {
+        console.error(err);
+    })
+    .finally(() => {
+        editProfileSubmitButton.textContent = 'Сохранить'
+    })
 }
-
-const cardsContainer = document.querySelector('.elements');
 
 function handleDeleteCardFormSubmit(card) {
     api.deleteCard(card.getAttribute("id"))
-    .then(() => {
-        cardsContainer.innerHTML = '';
-        renderInitialCards();
+    .then((res) => {
+        if (res.message === 'Пост удалён') {
+            const idForDelete = card.getAttribute("id");
+            document.querySelector(`[id="${idForDelete}"]`).remove();
+            deleteCardPopup.close();
+        }
     })
     .catch((err) => {
         console.error(err);

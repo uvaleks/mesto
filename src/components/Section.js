@@ -10,7 +10,7 @@ export default class Section {
     
     renderItems(items) {
         items.forEach(item => {
-            let card;
+            let card = '';
             if (item.owner._id === userId) {  
                 card = this._rendererForOwn(item)
             } else {
@@ -22,13 +22,11 @@ export default class Section {
 
     renderItem(item) {
         const card = this._rendererForOwn(item);
+        this._container.prepend(card)
     }
 
     _addItem(card) {
         this._container.append(card)
-        setTimeout(() => {
-            card.classList.add('card_visible')
-        }, 1)
     }
 }
     

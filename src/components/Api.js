@@ -4,17 +4,22 @@ export default class Api {
         this._headers = headers;
     }
   
+    _checkResponse(res) {
+        if (res.ok) {
+            return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+    }
+
     getInitialCards() {
         return fetch(`${this._baseUrl}/cards`, {headers: this._headers})
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
-            .then((result) => {
-                return result;
-            }); 
+        .then(this._checkResponse)
+        .then((result) => {
+            return result;
+        })
+        .catch((err) => {
+            console.error(err);
+        })
     }
 
     postCard({name, link}) {
@@ -29,15 +34,13 @@ export default class Api {
                 link: link
             })
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
-            .then((result) => {
-                return result;
-            }); 
+        .then(this._checkResponse)
+        .then((result) => {
+            return result;
+        })
+        .catch((err) => {
+            console.error(err);
+        })
     }
 
     patchAvatar(link) {
@@ -51,15 +54,13 @@ export default class Api {
                 avatar: link
             })
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
-            .then((result) => {
-                return result;
-            }); 
+        .then(this._checkResponse)
+        .then((result) => {
+            return result;
+        })
+        .catch((err) => {
+            console.error(err);
+        })
     }
 
 
@@ -71,15 +72,13 @@ export default class Api {
                 'Content-Type': 'application/json'
             }
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
-            .then((result) => {
-                return result;
-            }); 
+        .then(this._checkResponse)
+        .then((result) => {
+            return result;
+        })
+        .catch((err) => {
+            console.error(err);
+        })
     }
 
     deleteLike(id) {
@@ -90,15 +89,13 @@ export default class Api {
                 'Content-Type': 'application/json'
             }
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
-            .then((result) => {
-                return result;
-            }); 
+        .then(this._checkResponse)
+        .then((result) => {
+            return result;
+        })
+        .catch((err) => {
+            console.error(err);
+        })
     }
 
     deleteCard(id) {
@@ -109,28 +106,24 @@ export default class Api {
                 'Content-Type': 'application/json'
             }
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
-            .then((result) => {
-                return result;
-            }); 
+        .then(this._checkResponse)
+        .then((result) => {
+            return result;
+        })
+        .catch((err) => {
+            console.error(err);
+        })
     }
 
     getUserInfo() {
         return fetch(`${this._baseUrl}/users/me`, {headers: this._headers})
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
-            .then((result) => {
-                return result;
-            }); 
+        .then(this._checkResponse)
+        .then((result) => {
+            return result;
+        })
+        .catch((err) => {
+            console.error(err);
+        })
     }
 
     patchUserInfo({name, info}) {
@@ -145,14 +138,12 @@ export default class Api {
                 about: info
             })
         })
-            .then(res => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            })
-            .then((result) => {
-                return result;
-            }); 
+        .then(this._checkResponse)
+        .then((result) => {
+            return result;
+        })
+        .catch((err) => {
+            console.error(err);
+        })
     }
 }
