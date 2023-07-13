@@ -12,8 +12,8 @@ import PopupDeleteConfirm from '../components/PopupDeleteConfirm';
 
 const editButton = document.querySelector('.profile__edit-button');
 const popupEditProfile = document.querySelector('.popup_type_edit');
-const nameInput = popupEditProfile.querySelector('input[name="input-name"]');
-const descriptionInput = popupEditProfile.querySelector('input[name="input-description"]');
+const nameInput = popupEditProfile.querySelector('input[name="name"]');
+const descriptionInput = popupEditProfile.querySelector('input[name="about"]');
 
 const addButton = document.querySelector('.profile__add-button');
 
@@ -30,18 +30,15 @@ const mestoUserInfo = new UserInfo({ nameSelector: '#profile-name', infoSelector
 
 export let userId = '';
 
-const loadUserInfo = () => {
-    api.getUserInfo()
-    .then((info) => {
-        mestoUserInfo.setUserInfo({name: info.name, info: info.about, avatar: info.avatar})
-        userId = info._id
-    })
-    .catch((err) => {
-        console.error(err);
-    });
-}
-
-loadUserInfo();
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    userId = userData._id
+    mestoSection.renderItems(cards);
+    mestoUserInfo.setUserInfo({name: userData.name, info: userData.about, avatar: userData.avatar})  
+  })
+  .catch(err => {
+    console.error(err);
+  });
 
 const opener = (cardTitle, cardImgSrc) => {
     photoPopup.open(cardTitle, cardImgSrc);
@@ -79,22 +76,10 @@ const createOwnCard = (card) => {
     return new Card(userId, card, '.own-card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
 };
 
-const mestoSection = new Section({items: initialCards, renderer: createCard, rendererForOwn: createOwnCard}, '.elements');
+const mestoSection = new Section({userId, items: initialCards, renderer: createCard, rendererForOwn: createOwnCard}, '.elements');
 
-const renderInitialCards = () => {
-    api.getInitialCards()
-    .then((info) => {
-        mestoSection.renderItems(info);
-    })
-    .catch((err) => {
-        console.error(err);
-    });
-}
-
-renderInitialCards();
-
-const postUserInfo = ({name, info}) => {
-    return api.patchUserInfo({name, info})
+const postUserInfo = ({name, about}) => {
+    return api.patchUserInfo({name, about})
     .then((res) => {
         return res;
     })
@@ -172,9 +157,9 @@ const renderPostedCard = ({ 'input-place': name, 'input-link': link }) => {
     })
 }
 
-const handleEditFormSubmit = ({ 'input-name': name, 'input-description': description }) => {
+const handleEditFormSubmit = ({ 'name': name, 'about': about }) => {
     editProfileSubmitButton.textContent = 'Сохранение...';
-    postUserInfo({name, info: description})
+    postUserInfo({name, about})
     .then(res => {
         mestoUserInfo.setUserInfo({name: res["name"], info: res["about"], avatar: res["avatar"]})
         editFormPopup.close();

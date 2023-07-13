@@ -17,9 +17,6 @@ export default class Api {
         .then((result) => {
             return result;
         })
-        .catch((err) => {
-            console.error(err);
-        })
     }
 
     postCard({name, link}) {
@@ -38,9 +35,6 @@ export default class Api {
         .then((result) => {
             return result;
         })
-        .catch((err) => {
-            console.error(err);
-        })
     }
 
     patchAvatar(link) {
@@ -58,9 +52,6 @@ export default class Api {
         .then((result) => {
             return result;
         })
-        .catch((err) => {
-            console.error(err);
-        })
     }
 
 
@@ -76,9 +67,6 @@ export default class Api {
         .then((result) => {
             return result;
         })
-        .catch((err) => {
-            console.error(err);
-        })
     }
 
     deleteLike(id) {
@@ -92,9 +80,6 @@ export default class Api {
         .then(this._checkResponse)
         .then((result) => {
             return result;
-        })
-        .catch((err) => {
-            console.error(err);
         })
     }
 
@@ -110,9 +95,6 @@ export default class Api {
         .then((result) => {
             return result;
         })
-        .catch((err) => {
-            console.error(err);
-        })
     }
 
     getUserInfo() {
@@ -121,12 +103,9 @@ export default class Api {
         .then((result) => {
             return result;
         })
-        .catch((err) => {
-            console.error(err);
-        })
     }
 
-    patchUserInfo({name, info}) {
+    patchUserInfo({name, about}) {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
             headers: {
@@ -135,15 +114,12 @@ export default class Api {
             },
             body: JSON.stringify({
                 name: name,
-                about: info
+                about: about
             })
         })
         .then(this._checkResponse)
         .then((result) => {
             return result;
-        })
-        .catch((err) => {
-            console.error(err);
         })
     }
 }

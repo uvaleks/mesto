@@ -1,17 +1,16 @@
-import { userId } from '../pages/index.js';
-
 export default class Section {
-    constructor({items, renderer, rendererForOwn}, containerSelector) {
+    constructor({userId, items, renderer, rendererForOwn}, containerSelector) {
         this._items = items;
         this._renderer = renderer;
         this._rendererForOwn = rendererForOwn;
         this._container = document.querySelector(containerSelector);
+        this._userId = userId;
     }
     
     renderItems(items) {
         items.forEach(item => {
             let card = '';
-            if (item.owner._id === userId) {  
+            if (item.owner._id === this._userId) {  
                 card = this._rendererForOwn(item)
             } else {
                 card = this._renderer(item)
