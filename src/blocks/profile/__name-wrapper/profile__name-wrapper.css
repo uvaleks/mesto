@@ -2,7 +2,7 @@
     display: flex;
     max-width: min-content;
     gap: 18px;
-    transition: all .5s ease;
+    /* transition: all .5s ease; */
 }
 
 @media screen and (max-width: 615px) {

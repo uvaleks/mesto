@@ -1,5 +1,5 @@
 export default class Card {
-    constructor (userId, cardData, templateSelector, opener, delConfirmOpener, likeRemover, likePutter) {
+    constructor (userId, userName, userAvatar, cardData, templateSelector, opener, delConfirmOpener, likeRemover, likePutter) {
         this._likePutter = likePutter;
         this._likeRemover = likeRemover;
         this._delConfirmOpener = delConfirmOpener;
@@ -16,7 +16,11 @@ export default class Card {
         this._likesCounter = this._templateContent.querySelector('.card__like-counter');
         this._deleteButton = this._templateContent.querySelector('.card__delete-button');
         this._id = cardData._id;
+        this._cardLikes = cardData.likes;
         this._userId = userId;
+        this._userName = userName;
+        this._userAvatar = userAvatar;
+        this._avatarsWrapper = this._templateContent.querySelector('.card__avatars-wrapper');
     }
 
     deleteCard() {
@@ -29,6 +33,8 @@ export default class Card {
             this._likeRemover(this._id)
             .then((info) => {
                 if (!(info.likes.some(obj => obj._id === this._userId))) {
+                    const parentCard = this._likeButton.closest('.card');
+                    parentCard.querySelector(`.card__avatar[src="${this._userAvatar}"]`).remove();
                     this._likeButton.classList.remove('card__like-button_active')
                 };
                 this.updateLikes(info.likes.length);
@@ -40,6 +46,13 @@ export default class Card {
             this._likePutter(this._id)
             .then((info) => {
                 if (info.likes.some(obj => obj._id === this._userId)) {
+                    let avatar = document.createElement("img");
+                    avatar.src = this._userAvatar;
+                    avatar.title = this._userName;
+                    avatar.classList.add('card__avatar');
+                    avatar.style.marginLeft = '-' + (4 + 2 * this._cardLikes.length) + 'px';
+                    this._avatarsWrapper.style.marginLeft = (4 + 2 * this._cardLikes.length) + 'px';
+                    this._avatarsWrapper.append(avatar);
                     this._likeButton.classList.add('card__like-button_active')
                 };
                 this.updateLikes(info.likes.length);
@@ -81,6 +94,15 @@ export default class Card {
     }
 
     generateCard() {
+        this._cardLikes.forEach(like => {
+            let avatar = document.createElement("img");
+            avatar.src = like.avatar;
+            avatar.title = like.name;
+            avatar.classList.add('card__avatar');
+            avatar.style.marginLeft = '-' + (4 + 2 * this._cardLikes.length) + 'px';
+            this._avatarsWrapper.style.marginLeft = (4 + 2 * this._cardLikes.length) + 'px';
+            this._avatarsWrapper.append(avatar);
+        });
         if (this._cardData.likes !== undefined) {
             if (this._cardData.likes.some(obj => obj._id === this._userId)) {
                 this._likeButton.classList.add('card__like-button_active')

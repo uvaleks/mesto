@@ -6,16 +6,17 @@
     background-size: 22px;
     background-repeat: no-repeat;
     background-position: center;
-    border: 2px var(--text) solid;
-    border-radius: 2px;
+    border: 0.11em var(--text) solid;
+    border-radius: 4px;
     padding: 0;
     box-sizing: border-box;
     opacity: 1;
-    transition: opacity .15s ease, all .5s ease;
+    transition: opacity .15s ease, filter .5s ease;
 }
 
 .profile__add-button:hover {
-    opacity: .6;
+    opacity: .5;
+    /* opacity: .6; */
     cursor: pointer;
 }
 

@@ -1,9 +1,11 @@
 .card__title {
-    color: var(--title);
+    /* color: var(--text); */
     font-size: 24px;
-    font-weight: 900;
+    font-weight: 500;
+    /* font-weight: 900; */
     line-height: 29px;
-    padding: 25px 0 0;
+    padding: 7px 0 24px;
+    /* padding: 25px 0 0; */
     margin: 0;
     max-width: calc(100% - 60px);
     box-sizing: border-box;

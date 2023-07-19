@@ -1,0 +1,15 @@
+.header__theme-switcher-label {
+    overflow: hidden;
+    top: -3px;
+    display: flex;
+    flex-direction: row;
+    float: left;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    width: 32px;
+    height: 20px;
+    border-radius: 25px;
+    position: relative;
+    transition: background-color .5s ease;
+}

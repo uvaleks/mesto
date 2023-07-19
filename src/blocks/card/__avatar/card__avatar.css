@@ -1,0 +1,19 @@
+.card__avatar {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    width: 24px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    /* border: 0.11em black solid; */
+    /* background: rgb(242,242,242); */
+    transition: all .5s ease;
+}
+
+.card__avatar:first-child {
+    margin: 0;
+}
+
+.card__avatar:hover {
+    z-index: 10;
+    cursor: help;
+}

@@ -28,11 +28,17 @@ const api = new Api({
 
 const mestoUserInfo = new UserInfo({ nameSelector: '#profile-name', infoSelector: '#profile-description', avatarSelector: '.profile__avatar' });
 
-export let userId = '';
+let userId = '';
+let userName = '';
+let userAvatar = '';
+let mestoSection = {};
 
 Promise.all([api.getUserInfo(), api.getInitialCards()])
   .then(([userData, cards]) => {
     userId = userData._id
+    userName = userData.name;
+    userAvatar = userData.avatar;
+    mestoSection = new Section({userId, items: initialCards, renderer: createCard, rendererForOwn: createOwnCard}, '.elements');
     mestoSection.renderItems(cards);
     mestoUserInfo.setUserInfo({name: userData.name, info: userData.about, avatar: userData.avatar})  
   })
@@ -69,14 +75,12 @@ const likePutter = (id) => {
 }
 
 const createCard = (card) => {
-    return new Card(userId, card, '.card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
+    return new Card(userId, userName, userAvatar, card, '.card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
 };
 
 const createOwnCard = (card) => {
-    return new Card(userId, card, '.own-card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
+    return new Card(userId, userName, userAvatar, card, '.own-card-template', opener, delConfirmOpener, likeRemover, likePutter).generateCard()
 };
-
-const mestoSection = new Section({userId, items: initialCards, renderer: createCard, rendererForOwn: createOwnCard}, '.elements');
 
 const postUserInfo = ({name, about}) => {
     return api.patchUserInfo({name, about})
@@ -208,3 +212,24 @@ addFormValidator.enableValidation();
 
 const photoPopup = new PopupWithImage('.popup_type_photo');
 photoPopup.setEventListeners();
+
+//THEME SWITCHER
+
+const themeSwitcher = document.querySelector('.header__theme-switcher-input');
+
+const page = document.querySelector('.page');
+if (page.classList.contains('dark-theme')) {
+    themeSwitcher.checked = false;
+}
+
+themeSwitcher.addEventListener('change', function() {
+  if (this.checked) {
+    console.log("Checkbox is checked..");
+    page.classList.add('light-theme');
+    page.classList.remove('dark-theme');
+  } else {
+    console.log("Checkbox is not checked..");
+    page.classList.add('dark-theme');
+    page.classList.remove('light-theme');
+  }
+});

@@ -5,6 +5,7 @@
     box-sizing: content-box;
     border-bottom: 1px rgba(84, 84, 84, .7) solid;
     transition: all .5s ease;
+    justify-content: space-between;
 }
 
 @media screen and (max-width: 425px) {

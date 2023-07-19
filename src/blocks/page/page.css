@@ -6,13 +6,108 @@
     min-width: 320px;
     margin: 0 auto;
     line-height: 0;
-    background-color: var(--bg);
+    /* background-color: #3a3a3c; */
     font-family: 'Inter', sans-serif;
-    color: var(--text);
+    /* color: var(--text); */
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
+    transition: background-color .5s ease, color .5s ease .5s;
+}
+
+.page.dark-theme {
+    background-color: var(--title);
+    color: var(--text);
+}
+
+.page.light-theme {
+    background-color: var(--text);
+    color: var(--title);
+}
+
+.page.dark-theme .header__logo {
+    filter: none;
+}
+
+.page.light-theme .header__logo {
+    filter: invert(1);
+}
+
+.page.dark-theme .header__theme-switcher-label {
+    background-color: var(--text);
+}
+
+.page.light-theme .header__theme-switcher-label {
+    background-color: var(--title);
+}
+
+.page.dark-theme .header__theme-switcher-button {
+    background-color: var(--title);
+}
+
+.page.light-theme .header__theme-switcher-button {
+    background-color: var(--text);
+}
+
+.page.dark-theme .profile__avatar-edit-button {
+    background-color: rgba(0,0,0,.8);
+}
+
+.page.light-theme .profile__avatar-edit-button {
+    background-color: rgba(0,0,0,.2);
+}
+
+.page.dark-theme .profile__edit-button {
+    filter: none;
+}
+
+.page.light-theme .profile__edit-button {
+    filter: invert(1);
+}
+
+.page.dark-theme .profile__add-button {
+    filter: none;
+}
+
+.page.light-theme .profile__add-button {
+    filter: invert(1);
+}
+
+.page.dark-theme .card {
+    background-color: rgb(28,28,30);
+}
+
+.page.light-theme .card {
+    background-color: rgb(229,229,234);
+}
+
+.page.dark-theme .card__bar {
+    background-color: rgb(28,28,30);
+    box-shadow: 0px 0px 18px 25px rgb(28,28,30);
+}
+
+.page.light-theme .card__bar {
+    background-color: rgb(229,229,234);
+    box-shadow: 0px 0px 18px 25px rgb(229,229,234);
+}
+
+.page.dark-theme .card__avatar {
+    border: 0.11em rgb(28,28,30) solid;
+    background: rgb(44,44,46);
+}
+
+.page.light-theme .card__avatar {
+    border: 0.11em rgb(229,229,234) solid;
+    background: rgb(209,209,214);
+}
+
+.page.dark-theme .card__like-button {
+    filter: invert(1);
+}
+
+.page.dark-light .card__like-button {
+    filter: none;
 }

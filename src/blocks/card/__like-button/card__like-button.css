@@ -6,7 +6,8 @@
     width: 22px;
     height: 19px;
     opacity: 1;
-    transition: opacity .15s ease;
+    transition: opacity .15s ease, filter .5s ease;;
+    /* filter: invert(1); */
 }
 
 .card__like-button:hover {

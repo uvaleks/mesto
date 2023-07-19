@@ -4,13 +4,14 @@
     align-self: center;
     padding: 0;
     box-sizing: border-box;
-    margin: 0 0 6px;
+    margin: 0 0 5px;
+    border-radius: 2px;
     background-color: unset;
     background-image: url(../../../images/edit-icon.svg);
     background-size: 10px;
     background-repeat: no-repeat;
     background-position: center;
-    border: 1px var(--text) solid;
+    border: 0.11em var(--text) solid;
     opacity: 1;
     transition: opacity .15s ease, all .5s ease;
 }
