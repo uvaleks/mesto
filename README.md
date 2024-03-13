@@ -1,21 +1,28 @@
-# Проект: Mesto Russia
+<h3 align="center">💻 Mesto Vanilla JS</h3>
+<h1></h1>
+<div align="center">
+  
+🔗 [Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
 
-Учебный проект Яндекс Практикума, выполняемый с третьего по пятый месяц обучения веб-разработке (4—7 спринты)
+🔗 [GitHub Pages](https://uvaleks.github.io/mesto/)
 
-## Используемые технологии:
-* HTML
-* CSS
-* JavaScript
-* Git
+🔗 [Mesto React Rework](https://github.com/uvaleks/mesto-react/)
+  
+</div>
+<h1></h1>
+<h3 align="center">🛠 Languages & Tools</h3>
 
-## Используемые инструменты:
-* Figma. [Ссылка на макет](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
-* [Сервис по масштабированию png](https://www.iloveimg.com/resize-image/resize-png)
-* [Сервис по оптимизации png](tinypng.com)
-* Visual Studio Code
-* GitHub
+<div align="center">
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=css,html,figma,js,babel,webpack,vscode,git&perline=4" />
+  </a>
+<br><br>
 
-## Планы по доработке
-* Реализовать смену языка страницы по кнопке в шапке
+Image Resize [ILoveImg](https://www.iloveimg.com/resize-image/resize-png)
 
-* [Ссылка на GitHub Pages](https://uvaleks.github.io/mesto/)
+PNG Optimization [TinyPNG](tinypng.com)
+  
+</div>
+<h1></h1>
+<h3 align="center">🔖 Next steps</h3>
+<p>📌 Add language switching</p>
